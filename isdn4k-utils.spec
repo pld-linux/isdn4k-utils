@@ -2,11 +2,11 @@ Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Name:		isdn4k-utils
 Version:	3.1pre1
-Release:	1
+Release:	2
+License:	distributable
 Group:		Applications/Communications
 Group(de):	Applikationen/Kommunikation
 Group(pl):	Aplikacje/Komunikacja
-Copyright:	distributable
 Source0:	ftp://ftp.franken.de/pub/isdn4linux/utils/%{name}.v%{version}.tar.gz
 Source1:	%{name}-%{version}.config
 Patch0:		%{name}-%{version}-COL.patch
@@ -36,22 +36,22 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} devices
 
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/isdn,%{_sbindir},%{_bindir},/var/lock/isdn} \
-$RPM_BUILD_ROOT{/usr/X11R6/lib/X11/app-defaults,/usr/doc/faq/isdn4linux}
+	$RPM_BUILD_ROOT{/usr/X11R6/lib/X11/app-defaults}
 
 %{__make} install
-
-cp -a $RPM_BUILD_ROOT/usr/doc/faq/isdn4linux ./isdn4linux-faq
 
 install isdnlog/isdnrep/isdnrep.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install isdnlog/isdnlog/isdnlog.8 $RPM_BUILD_ROOT%{_mandir}/man8
 echo ".so ttyI.4" > $RPM_BUILD_ROOT%{_mandir}/man4/cui.4
+
+gzip -9nf COPYING README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING README isdn4linux-faq
+%doc COPYING.gz README.gz isdn4linux-faq
 %dir /var/lock/isdn
 
 %dir %{_sysconfdir}/isdn
