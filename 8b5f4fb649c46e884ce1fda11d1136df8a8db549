@@ -1,0 +1,3 @@
+- updated isdn4k-utils to 030314 (cvs snapshot)
+- prepared capi plugin for pppd (ppp-plugin-capi) to build with .h files from
+  ppp-plugin-devel
