@@ -1,7 +1,7 @@
 diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin/Makefile
---- isdn4k-utils.orig/pppdcapiplugin/Makefile	Mon Jul  1 12:15:20 2002
-+++ isdn4k-utils/pppdcapiplugin/Makefile	Sat Mar 15 13:57:20 2003
-@@ -8,86 +8,17 @@
+--- isdn4k-utils.orig/pppdcapiplugin/Makefile	Wed Jun 11 23:06:50 2003
++++ isdn4k-utils/pppdcapiplugin/Makefile	Wed Jun 11 23:08:26 2003
+@@ -8,86 +8,15 @@
  #  as published by the Free Software Foundation; either version
  #  2 of the License, or (at your option) any later version.
  
@@ -17,22 +17,23 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin
 +INSTALL=$(TOPDIR)/install-sh -c
 +INSTALLDATA=$(TOPDIR)/install-sh -c -o root -m 600
 +MKDIR=$(TOPDIR)/mkinstalldirs
-+MANDIR="/usr/share/man"
++MANDIR=/usr/share/man
++
++#PPPVERSION=$(shell /usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
++PLUGINDIR=$(DESTDIR)/usr/lib/pppd/$(PPPVERSION)
++include $(TOPDIR)/Rules.make
  
 -PPPSRCDIRS=/src/isdn/pppd
-+PPPVERSION=$(shell /usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
- 
+-
 -ifeq ($(PPPVERSIONS),)
--PPPVERSIONS = 2.3.11 2.4.0 2.4.1 2.4.1b1 2.4.1b2
+-PPPVERSIONS = 2.3.11 2.4.0 2.4.1 2.4.1b1 2.4.1b2 2.4.2b3
 -endif
-+PLUGINDIR=$(DESTDIR)/usr/lib/pppd/$(PPPVERSION)
- 
+-
 -PEERDIR=${DESTDIR}/etc/ppp/peers/isdn
 -DRDSLDIR=${DESTDIR}/etc/drdsl
 -PEERS= arcor otelo talkline avm avm-ml leased
 -DRDSLFILES = adsl.conf
-+include $(TOPDIR)/Rules.make
- 
+-
 -ALL = capiplugin.so userpass.so
 -
 -all: pversion
@@ -99,8 +100,8 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin
 -config:
 -	@echo nothing to configure
 diff -Naur isdn4k-utils.orig/pppdcapiplugin/Rules.make isdn4k-utils/pppdcapiplugin/Rules.make
---- isdn4k-utils.orig/pppdcapiplugin/Rules.make	Tue May  1 14:43:49 2001
-+++ isdn4k-utils/pppdcapiplugin/Rules.make	Sat Mar 15 13:58:41 2003
+--- isdn4k-utils.orig/pppdcapiplugin/Rules.make	Wed Jun 11 23:06:50 2003
++++ isdn4k-utils/pppdcapiplugin/Rules.make	Wed Jun 11 23:07:21 2003
 @@ -11,20 +11,37 @@
  vpath %.c $(TOPDIR)
  
@@ -157,8 +158,8 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/Rules.make isdn4k-utils/pppdcapiplug
  config:
  	@echo nothing to configure
 diff -Naur isdn4k-utils.orig/pppdcapiplugin/capiconn.h isdn4k-utils/pppdcapiplugin/capiconn.h
---- isdn4k-utils.orig/pppdcapiplugin/capiconn.h	Thu Jan 25 15:45:41 2001
-+++ isdn4k-utils/pppdcapiplugin/capiconn.h	Sat Mar 15 13:57:20 2003
+--- isdn4k-utils.orig/pppdcapiplugin/capiconn.h	Wed Jun 11 23:06:50 2003
++++ isdn4k-utils/pppdcapiplugin/capiconn.h	Wed Jun 11 23:07:21 2003
 @@ -25,7 +25,7 @@
  
  #ifndef __CAPICONN_H__
@@ -169,8 +170,8 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/capiconn.h isdn4k-utils/pppdcapiplug
  #include <capi20.h>
  
 diff -Naur isdn4k-utils.orig/pppdcapiplugin/capiplugin.c isdn4k-utils/pppdcapiplugin/capiplugin.c
---- isdn4k-utils.orig/pppdcapiplugin/capiplugin.c	Fri Feb 28 09:36:08 2003
-+++ isdn4k-utils/pppdcapiplugin/capiplugin.c	Sat Mar 15 13:57:20 2003
+--- isdn4k-utils.orig/pppdcapiplugin/capiplugin.c	Wed Jun 11 23:06:50 2003
++++ isdn4k-utils/pppdcapiplugin/capiplugin.c	Wed Jun 11 23:07:21 2003
 @@ -17,7 +17,7 @@
  #include <sys/ioctl.h>
  #include <sys/types.h>
@@ -191,14 +192,14 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/capiplugin.c isdn4k-utils/pppdcapipl
  #endif
 diff -Naur isdn4k-utils.orig/pppdcapiplugin/p.h isdn4k-utils/pppdcapiplugin/p.h
 --- isdn4k-utils.orig/pppdcapiplugin/p.h	Thu Jan  1 01:00:00 1970
-+++ isdn4k-utils/pppdcapiplugin/p.h	Sat Mar 15 13:57:20 2003
++++ isdn4k-utils/pppdcapiplugin/p.h	Wed Jun 11 23:07:21 2003
 @@ -0,0 +1,2 @@
 +#ifndef __P
 +#define __P
 diff -Naur isdn4k-utils.orig/pppdcapiplugin/userpass.c isdn4k-utils/pppdcapiplugin/userpass.c
---- isdn4k-utils.orig/pppdcapiplugin/userpass.c	Wed Nov  7 15:38:17 2001
-+++ isdn4k-utils/pppdcapiplugin/userpass.c	Sat Mar 15 13:57:20 2003
-@@ -27,9 +27,9 @@
+--- isdn4k-utils.orig/pppdcapiplugin/userpass.c	Wed Jun 11 23:06:50 2003
++++ isdn4k-utils/pppdcapiplugin/userpass.c	Wed Jun 11 23:07:21 2003
+@@ -30,9 +30,9 @@
   *
   *
   */
