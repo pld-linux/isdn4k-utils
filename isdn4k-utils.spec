@@ -19,6 +19,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
+BuildRequires:	tcl-devel >= 8.3.4-10
 BuildRequires:	/usr/sbin/pppd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
