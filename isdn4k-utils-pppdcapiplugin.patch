@@ -1,0 +1,37 @@
+diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin/Makefile
+--- isdn4k-utils.orig/pppdcapiplugin/Makefile	Wed Jul  3 02:00:28 2002
++++ isdn4k-utils/pppdcapiplugin/Makefile	Sun Oct  6 19:20:50 2002
+@@ -12,7 +12,7 @@
+ export CAPIINC=$(TOPDIR)/../capi20
+ export CAPILIB=$(TOPDIR)/../capi20
+ export INSTALL=$(TOPDIR)/install-sh -c
+-export INSTALLDATA=$(TOPDIR)/install-sh -c -o root -m 600
++export INSTALLDATA=$(TOPDIR)/install-sh -c 
+ export MKDIR=$(TOPDIR)/mkinstalldirs
+ 
+ PPPSRCDIRS=/src/isdn/pppd
+@@ -74,9 +74,9 @@
+ 	    echo $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
+ 	    $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
+ 	done
+-	$(MAKE) install-peers
+-	$(MAKE) install-drdsl
+-	$(MAKE) install-man
++#	$(MAKE) install-peers
++#	$(MAKE) install-drdsl
++#	$(MAKE) install-man
+ 
+ srcsetup:
+ 	@for v in $(PPPVERSIONS) ; do \
+diff -Naur isdn4k-utils.orig/pppdcapiplugin/Rules.make isdn4k-utils/pppdcapiplugin/Rules.make
+--- isdn4k-utils.orig/pppdcapiplugin/Rules.make	Tue May  1 12:43:49 2001
++++ isdn4k-utils/pppdcapiplugin/Rules.make	Sun Oct  6 19:21:44 2002
+@@ -21,7 +21,7 @@
+ all:	$(ALL)
+ 
+ capiplugin.so: capiplugin.o capiconn.o
+-	$(CC) -o $@ $(LDFLAGS) capiplugin.o capiconn.o -lcapi20dyn
++	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) capiplugin.o capiconn.o -lcapi20dyn
+ 
+ userpass.so: userpass.o
+ 	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) -nostdlib userpass.o

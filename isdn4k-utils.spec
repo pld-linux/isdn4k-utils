@@ -3,13 +3,14 @@ Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	0208190200
-Release:	3
+Release:	3.1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
 Source1:        %{name}.config
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-ppc.patch
+Patch2:		%{name}-pppdcapiplugin.patch
 URL:		http://www.isdn4linux.de/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -75,6 +76,7 @@ Statyczne biblioteki dla isdn4k-tools.
 %ifarch ppc
 %patch1 -p1
 %endif
+%patch2 -p1
 
 %build
 for i in capi20 capifax capiinfo capiinit rcapid; do
@@ -86,9 +88,10 @@ for i in capi20 capifax capiinfo capiinit rcapid; do
 	%{__automake}
 	cd ..
 done
+
 cp %{SOURCE1} .config
 %{__make} OPTIM="%{rpmcflags}" subconfig
-%{__make} CFLAGS="%{rpmcflags} -I/usr/include/ncurses/"
+%{__make} PPPVERSIONS=2.4.1 CFLAGS="%{rpmcflags} -I/usr/include/ncurses/"
 
 %install
 rm -rf $RPM_BUILD_ROOT
