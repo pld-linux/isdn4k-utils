@@ -95,7 +95,7 @@ CAPI - otwiera nowy wymiar w ¶wiecie technologii komunikacyjnych.
 Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
 
 Ten pakiet zawiera program inicjalizuj±cy kartê ISDN zgodn± z CAPI.
-Trzeba zaopatrzyæ siê w odpowiedni modu³ j±dra i wyedytowaæ plik
+Trzeba zaopatrzyæ siê w odpowiedni modu³ j±dra i zmodyfikowaæ plik
 /etc/capi.conf.
 
 %package -n capi-libs
