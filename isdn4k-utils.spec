@@ -3,7 +3,7 @@ Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	0208190200
-Release:	3.1
+Release:	4
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
@@ -39,7 +39,6 @@ Summary:        Utilities for the kernel ISDN-subsystem - frontend for X11
 Summary(pl):    Narzêdzia dla podsystemu ISDN j±dra - nakladki dla X11
 Group:          Applications/Communications
 Requires:       %{name} = %{version}
-
 %description x11
 Utilities for the kernel ISDN-subsystem and some contributions (X11).
 
@@ -58,17 +57,129 @@ Developement files for isdn4k-tools.
 %description devel -l pl
 Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools.
 
-%package static
-Summary:	Static libraries for isdn4k-tools
-Summary(pl):	Statyczne biblioteki dla isdn4k-tools
+
+%define		ppp_ver	2.4.1
+%package -n ppp-capiplugin
+Summary:	capiplugin for pppd-%{ppp_ver}
+Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
+Group:		Sieciowe/Serwery
+Requires:	ppp = %{ppp_ver}
+
+%description -n ppp-capiplugin
+capiplugin for pppd-%{ppp_ver}
+
+%description -n ppp-capiplugin -l pl
+Wtyczka capi dla pppd w wersji %{ppp_ver}
+
+%package -n capi
+Summary:	Program which can initialize CAPI hardware 
+Summary(pl):	Program, który inicjalizuje sprzêt ISDN zgodny z CAPI  
+Group:		System/Administration
+
+%description -n capi
+The Common ISDN Application Programming Interface - CAPI for short
+- opens up a new dimension in communication technologies. It provides
+a uniform, independent interface to ISDN hardware components.
+
+This package contains program which initialize your CAPI hardware.
+You shoul install appropriate kernel module first and edit 
+/etc/capi.conf.
+
+%description -n capi -l pl
+Standard Common ISDN Application Programming Interface - w skrócie CAPI
+- otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych. Dostarcza
+ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+
+Ten pakiet zawiera program, który zainicjuje twoj± kartê ISDN zgodn± z CAPI
+Powiniene¶ zaopatrzyæ siê w odpowiedni modu³ j±dra i wyedytowaæ plik
+/etc/capi.conf.
+
+%package -n capi-libs
+Summary:	CAPI 2.0 - shared library
+Summary(pl):	biblioteka dzielona CAPI 2.0
+Group:		Development/Libraries
+
+
+%description -n capi-libs
+The Common ISDN Application Programming Interface - CAPI for short 
+- opens up a new dimension in communication technologies. It provides 
+a uniform, independent interface to ISDN hardware components.
+
+This package contains shared library which provide CAPI 2.0.
+
+%description -n capi-libs -l pl
+Standard Common ISDN Application Programming Interface - w skrócie CAPI
+- otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych. Dostarcza
+ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+
+Ten pakiet zawiera bibliotekê dzielon±, która realizuje standard CAPI 
+w wersji 2.0
+
+%package -n capi-libs-static
+Summary:	Static libraries for CAPI 2.0
+Summary(pl):	Statyczne biblioteki dla CAPI 2.0
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}
 
-%description static
-Static libraries for isdn4k-tools.
+%description -n capi-libs-static
+The Common ISDN Application Programming Interface - CAPI for short
+- opens up a new dimension in communication technologies. It provides
+a uniform, independent interface to ISDN hardware components.
 
-%description static -l pl
-Statyczne biblioteki dla isdn4k-tools.
+This package contains static library which provide CAPI 2.0.
+
+
+%description -n capi-libs-static -l pl
+Standard Common ISDN Application Programming Interface - w skrócie CAPI
+- otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych. Dostarcza
+ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+
+Ten pakiet zawiera bibliotekê statyczn±, która realizuje standard CAPI
+w wersji 2.0
+
+%package -n capi-devel
+Summary:        CAPI 2.0 - development staff
+Summary(pl):    CAPI 2.0 - narzêdzia dewelopera
+Group:          Development/Libraries
+Requires:       capi-libs = %{version}
+
+%description -n capi-devel
+
+The Common ISDN Application Programming Interface - CAPI for short
+- opens up a new dimension in communication technologies. It provides
+a uniform, independent interface to ISDN hardware components.
+
+This package contains developement files for CAPI 2.0.
+
+
+%description -n capi-devel -l pl
+Standard Common ISDN Application Programming Interface - w skrócie CAPI
+- otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych. Dostarcza
+ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+
+Ten pakiet zawiera pliki niezbêdne przy towrzeniu programów wykorzystuj±cych
+standard CAPI 2.0
+
+%package -n capi-tools
+Summary:        CAPI 2.0 - useful programs
+Summary(pl):    CAPI 2.0 - programy u¿ytkowe
+Group:          Applications/Communications
+
+%description -n capi-tools
+The Common ISDN Application Programming Interface - CAPI for short
+- opens up a new dimension in communication technologies. It provides
+a uniform, independent interface to ISDN hardware components.
+
+This package contains programs which can make use of your CAPI compilant
+ISDN hardware
+
+%description -n capi-tools -l pl
+Standard Common ISDN Application Programming Interface - w skrócie CAPI
+- otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych. Dostarcza
+ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+
+Ten pakiet zawiera programy, które potrafi± zrobic u¿ytek z twojego
+zgodnego z CAPI sprzêtu ISDN.
 
 %prep
 %setup -q -n %{name}
@@ -91,13 +202,13 @@ done
 
 cp %{SOURCE1} .config
 %{__make} OPTIM="%{rpmcflags}" subconfig
-%{__make} PPPVERSIONS=2.4.1 CFLAGS="%{rpmcflags} -I/usr/include/ncurses/"
+%{__make} PPPVERSIONS=%{ppp_ver} CFLAGS="%{rpmcflags} -I/usr/include/ncurses/"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq,%{_xbindir}}
 
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
+%{__make} PPPVERSIONS=%{ppp_ver} DESTDIR=$RPM_BUILD_ROOT install
 
 mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.txt \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
@@ -118,13 +229,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc FAQ/{_howto,_example}
 %dir %{_sysconfdir}/isdn
 %config %{_sysconfdir}/isdn/*
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_sbindir}/*
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
+%attr(755,root,root) %{_bindir}/[^c]*
+%attr(755,root,root) %{_sbindir}/[^acr]*
 %dir %{_libdir}/isdn
 %{_libdir}/isdn/*
 %dir /var/lock/isdn
-%{_mandir}/man[14578]/*
+%{_mandir}/man[1457]/*
+%{_mandir}/man8/[^ac]*
 
 %files x11
 %defattr(644,root,root,755)
@@ -134,11 +245,34 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%{_xincludedir}/X11/bitmaps/*
+
+%files -n capi-libs-static
+%defattr(644,root,root,755)
+%{_libdir}/*.a
+
+%files -n ppp-capiplugin
+%defattr(644,root,root,755)
+%doc pppdcapiplugin/{README,examples/*,peers/*}
+%attr(755,root,root) %{_libdir}/pppd/%{ppp_ver}/*
+%{_mandir}/man8/capiplugin*
+
+%files -n capi-libs
+%attr(755,root,root) %{_libdir}/*.so.*.*.*
+
+%files -n capi-devel
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.la
 %attr(755,root,root) %{_libdir}/*.so
 %{_includedir}/*.h
-%{_xincludedir}/X11/bitmaps/*
 
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/*.a
+%files -n capi-tools
+%doc rcapid/README
+%attr(755,root,root) %{_sbindir}/[ar]*
+%attr(755,root,root) %{_bindir}/capiinfo
+%{_mandir}/man8/avmcapi*
+%{_mandir}/man8/capiinfo*
+
+%files -n capi
+%doc capiinit/capi.conf
+%attr(755,root,root) %{_sbindir}/capiinit
