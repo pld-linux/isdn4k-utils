@@ -2,8 +2,9 @@ Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
-Version:	0208190200
-Release:	5
+Version:	030314
+Epoch:		2
+Release:	1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
@@ -24,7 +25,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_xincludedir	%{_xprefix}/include
 %define		_xlibdir	%{_xprefix}/lib
 %define		_xmandir	%{_xprefix}/man
-%define		ppp_ver		2.4.1
+%define		ppp_ver		%(/usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
+%define		ppp_pkg_ver	%(rpm -q --queryformat "%%{VERSION}-%%{RELEASE}" ppp-plugin-devel)
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
@@ -63,7 +65,8 @@ Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools.
 Summary:	capiplugin for pppd-%{ppp_ver}
 Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
-Requires:	ppp = %{ppp_ver}
+Requires:	ppp = %{ppp_pkg_ver}
+BuildRequires:	ppp-plugin-devel
 
 %description -n ppp-plugin-capi
 capiplugin for pppd-%{ppp_ver}.
