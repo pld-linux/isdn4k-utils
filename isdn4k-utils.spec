@@ -67,7 +67,7 @@ Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools.
 Summary:	capiplugin for pppd-%{ppp_ver}
 Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
-%requires_eq_to	ppp ppp-plugin-devel
+%{requires_eq_to ppp ppp-plugin-devel}
 
 %description -n ppp-plugin-capi
 capiplugin for pppd-%{ppp_ver}.
