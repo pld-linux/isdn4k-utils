@@ -5,7 +5,7 @@ Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Name:		isdn4k-utils
 Version:	0208190200
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
@@ -33,10 +33,10 @@ Summary(pl):    U¿ytki dla podsystemu ISDN j±dra - nakladki dla X11.
 Group:          Applications/Communications
 Requires:       %{name} = %{version}
 
-%description
+%description x11
 Utilities for the kernel ISDN-subsystem and some contributions (X11).
 
-%description -l pl
+%description -l pl x11
 Narzêdzia dla podsystemu ISDN j±dra, nak³adki graficzne (X11).
 
 %package devel
@@ -107,7 +107,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README FAQ NEWS LEGAL.ipppcomp ipppcomp/README.LZS Mini-FAQ/*.txt
 %doc isdnlog/{tools/dest/README*,isdnrep/CHANGES*}
-%doc FAQ/{_howto,_example}
+%doc FAQ/{_howto,_example} 4lfaq.sgml
 %config %{_sysconfdir}/isdn/*
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
