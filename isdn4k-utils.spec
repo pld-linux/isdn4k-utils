@@ -28,7 +28,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sbindir	/sbin
 %define		xincludedir	/usr/X11R6/include/X11
 %define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
-%define		ppp_ver		%(awk -F'"' '/VERSION/ { print $2 }' /usr/include/pppd/patchlevel.h)
+%define		ppp_ver		%(awk -F'"' '/VERSION/ { print $2 }' /usr/include/pppd/patchlevel.h 2>/dev/null || echo ERROR)
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
