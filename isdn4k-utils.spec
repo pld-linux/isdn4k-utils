@@ -1,8 +1,6 @@
-# TODO:
-# - separate X11 package
-
 Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
+Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	0208190200
 Release:	2
@@ -26,6 +24,9 @@ Utilities for the kernel ISDN-subsystem and some contributions.
 
 %description -l pl
 Narzêdzia dla podsystemu ISDN j±dra.
+
+%description -l pt_BR
+Utilitários para configuração do subsistema ISDN.
 
 %package x11
 Summary:        Utilities for the kernel ISDN-subsystem - frontend for X11
