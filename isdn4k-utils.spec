@@ -5,8 +5,6 @@ Version:	0112071200
 Release:	3
 License:	distributable
 Group:		Applications/Communications
-Group(de):	Applikationen/Kommunikation
-Group(pl):	Aplikacje/Komunikacja
 Source0:	%{name}-%{version}.tar.gz
 Source1:        %{name}.config
 Patch0:         %{name}-Makefiles.patch
