@@ -14,6 +14,7 @@ Patch0:		%{name}-make.patch
 Patch1:		%{name}-ppc.patch
 Patch2:		%{name}-pppdcapiplugin.patch
 Patch3:		%{name}-isdnlog_dont_touch_etc_services.patch
+Patch4:		%{name}-libdir.patch
 URL:		http://www.isdn4linux.de/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -188,6 +189,8 @@ zgodnego z CAPI sprzêtu ISDN.
 %endif
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+
 %build
 for i in capi20 capifax capiinfo capiinit rcapid; do
 	cd $i
@@ -200,6 +203,7 @@ done
 
 cp %{SOURCE1} .config
 %{__make} subconfig \
+	CONFIG_LIBDIR=%{_libdir} \
 	OPTIM="%{rpmcflags}"\
 	CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
 
@@ -213,6 +217,7 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{
 
 %{__make} install \
 	PPPVERSION=%{ppp_ver} \
+	CONFIG_LIBDIR=%{_libdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.txt \
