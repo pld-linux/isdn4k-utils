@@ -1,15 +1,15 @@
 Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Name:		isdn4k-utils
-Version:	3.1pre1
-Release:	2
+Version:	0112071200
+Release:	3
 License:	distributable
 Group:		Applications/Communications
 Group(de):	Applikationen/Kommunikation
 Group(pl):	Aplikacje/Komunikacja
-Source0:	ftp://ftp.franken.de/pub/isdn4linux/utils/%{name}.v%{version}.tar.gz
-Source1:	%{name}-%{version}.config
-Patch0:		%{name}-%{version}-COL.patch
+Source0:	%{name}-%{version}.tar.gz
+Source1:        %{name}.config
+Patch0:         %{name}-Makefiles.patch
 URL:		http://www.franken.de/ftp/pub/isdn4linux/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -17,32 +17,34 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
-
 %description -l pl
 U¿ytki dla podsystemu ISDN j±dra.
 
 %prep
-%setup -q
-%patch -P 0 -p1
-cp -p %{SOURCE1} .config
+%setup0 -q
+%patch0 -p1
+
+
 
 %build
-%{__make} OPTIM="%{rpmcflags}" oldconfig
+cp %{SOURCE1} .config
+%{__make} OPTIM="%{rpmcflags}" subconfig
 %{__make} CFLAGS="%{rpmcflags}"
+
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} devices
+#%{__make} devices
 
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/isdn,%{_sbindir},%{_bindir},/var/lock/isdn} \
-	$RPM_BUILD_ROOT{/usr/X11R6/lib/X11/app-defaults}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/isdn,%{_sbindir},%{_bindir},/var/lock/isdn,%{_libdir},%{_includedir}} $RPM_BUILD_ROOT{/usr/X11R6/lib/X11/app-defaults} $RPM_BUILD_ROOT%{_mandir}/{man1,man2,man3,man4,man5,man6,man7,man8}
 
-%{__make} install
+%{__make} DESTDIR=$RPM_BUILD_ROOT install
 
-install isdnlog/isdnrep/isdnrep.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install isdnlog/isdnlog/isdnlog.8 $RPM_BUILD_ROOT%{_mandir}/man8
-echo ".so ttyI.4" > $RPM_BUILD_ROOT%{_mandir}/man4/cui.4
+#install isdnlog/isdnrep/isdnrep.1 $RPM_BUILD_ROOT%{_mandir}/man1
+#install isdnlog/isdnlog/isdnlog.8 $RPM_BUILD_ROOT%{_mandir}/man8
+#echo ".so ttyI.4" > $RPM_BUILD_ROOT%{_mandir}/man4/cui.4
 
 gzip -9nf COPYING README
 
@@ -51,54 +53,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING.gz README.gz isdn4linux-faq
+%doc COPYING.gz README.gz 
 %dir /var/lock/isdn
 
 %dir %{_sysconfdir}/isdn
-%config %{_sysconfdir}/isdn/callerid.conf
-%config %{_sysconfdir}/isdn/isdn.conf
+%config %{_sysconfdir}/isdn/*
 
-/dev/*
 
-%attr(755,root,root) %{_sbindir}/avmcapictrl
-%attr(755,root,root) %{_sbindir}/hisaxctrl
-%attr(755,root,root) %{_sbindir}/icnctrl
-%attr(755,root,root) %{_sbindir}/imon
-%attr(755,root,root) %{_sbindir}/imontty
-%attr(755,root,root) %{_sbindir}/ipppd
-%attr(755,root,root) %{_sbindir}/ipppstats
-%attr(755,root,root) %{_sbindir}/iprofd
-%attr(755,root,root) %{_sbindir}/isdnctrl
-%attr(755,root,root) %{_sbindir}/isdnlog
-%attr(755,root,root) %{_sbindir}/pcbitctl
-%attr(755,root,root) %{_sbindir}/telesctrl
+%attr(755,root,root) %{_sbindir}/*
 
 /usr/X11R6/lib/X11/app-defaults/XISDNLoad
 
-%attr(755,root,root) %{_bindir}/isdnconf
-%attr(755,root,root) %{_bindir}/isdnrep
-%attr(755,root,root) %{_bindir}/xisdnload
-%attr(755,root,root) %{_bindir}/xmonisdn
+%attr(755,root,root) %{_bindir}/*
 
-%dir %{_libdir}/isdn
-%{_libdir}/isdn/areacodes
 
-%{_libdir}/vbox
+#%dir %{_libdir}/isdn
+%{_libdir}/*
 
-%{_mandir}/man1/isdnrep.1*
-%{_mandir}/man1/xisdnload.1x*
-%{_mandir}/man1/xmonisdn.1x*
-%{_mandir}/man4/cui.4*
-%{_mandir}/man4/ttyI.4*
-%{_mandir}/man4/isdninfo.4*
-%{_mandir}/man4/isdn_audio.4*
-%{_mandir}/man7/isdn_cause.7*
-%{_mandir}/man8/avmcapictrl.8*
-%{_mandir}/man8/hisaxctrl.8*
-%{_mandir}/man8/icnctrl.8*
-%{_mandir}/man8/imon.8*
-%{_mandir}/man8/ipppd.8*
-%{_mandir}/man8/ipppstats.8*
-%{_mandir}/man8/iprofd.8*
-%{_mandir}/man8/isdnctrl.8*
-%{_mandir}/man8/telesctrl.8*
+#%{_libdir}/isdn/*
+#%{_libdir}/vbox
+
+%{_mandir}/*
