@@ -27,6 +27,18 @@ Utilities for the kernel ISDN-subsystem and some contributions.
 %description -l pl
 Narzêdzia dla podsystemu ISDN j±dra.
 
+%package x11
+Summary:        Utilities for the kernel ISDN-subsystem - frontend for X11
+Summary(pl):    U¿ytki dla podsystemu ISDN j±dra - nakladki dla X11.
+Group:          Applications/Communications
+Requires:       %{name} = %{version}
+
+%description
+Utilities for the kernel ISDN-subsystem and some contributions (X11).
+
+%description -l pl
+Narzêdzia dla podsystemu ISDN j±dra, nak³adki graficzne (X11).
+
 %package devel
 Summary:	Developement files for isdn4k-tools
 Summary(pl):	Rzeczy potrzebne do tworzenia z u¿yciem isdn4k-tools
@@ -74,7 +86,7 @@ cp %{SOURCE1} .config
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq,%{_prefix}/X11R6/bin}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
@@ -84,6 +96,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.html \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
 mv $RPM_BUILD_ROOT%{_datadir}/doc/vbox/*.txt \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
+mv $RPM_BUILD_ROOT%{_bindir}/{xisdnload,xmonisdn} \
+	$RPM_BUILD_ROOT%{_prefix}/X11R6/bin
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -103,6 +118,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/isdn
 %{_mandir}/man[14578]/*
 
+
+%files x11
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_prefix}/X11R6/bin/*
 /usr/X11R6/lib/X11/app-defaults/XISDNLoad
 /usr/X11R6/man/man1/*
 
