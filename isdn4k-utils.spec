@@ -1,13 +1,13 @@
 Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Name:		isdn4k-utils
-Version:	2.1b1
-Release:	6
+Version:	3.1pre1
+Release:	1
 Group:		Applications/Communications
 Group(de):	Applikationen/Kommunikation
 Group(pl):	Aplikacje/Komunikacja
 Copyright:	distributable
-Source0:	ftp://ftp.franken.de/pub/isdn4linux/v2.1/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.franken.de/pub/isdn4linux/utils/%{name}.v%{version}.tar.gz
 Source1:	%{name}-%{version}.config
 Patch0:		%{name}-%{version}-COL.patch
 URL:		http://www.franken.de/ftp/pub/isdn4linux/
