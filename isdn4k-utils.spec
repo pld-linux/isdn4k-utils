@@ -3,7 +3,7 @@ Summary(pl):	U¿ytki dla podsystemu ISDN j±dra.
 Name:		isdn4k-utils
 Version:	2.1b1
 Release:	6
-Group:		Communication/ISDN
+Group:		Applications/Communications
 Copyright:	distributable
 Source0:	ftp://ftp.franken.de/pub/isdn4linux/v2.1/%{name}-%{nersion}.tar.gz
 Source1:	isdn4k-utils-%{version}.config
