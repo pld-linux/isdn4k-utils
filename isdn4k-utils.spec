@@ -23,13 +23,13 @@ U¿ytki dla podsystemu ISDN j±dra.
 cp -p $RPM_SOURCE_DIR/isdn4k-utils-%{Version}.config .config
 
 %build
-make OPTIM="$RPM_OPT_FLAGS" oldconfig
-make CFLAGS="$RPM_OPT_FLAGS"
+%{__make} OPTIM="$RPM_OPT_FLAGS" oldconfig
+%{__make} CFLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make devices
+%{__make} devices
 
 mkdir -p $DESTDIR/etc/isdn
 mkdir -p $DESTDIR/sbin
@@ -38,7 +38,7 @@ mkdir -p $DESTDIR/usr/bin
 mkdir -p $DESTDIR/usr/doc/faq/isdn4linux
 mkdir -p $DESTDIR/var/lock/isdn
 
-make install
+%{__make} install
 
 cp -a isdnlog/isdnrep/isdnrep.1 ${DESTDIR}/usr/man/man1
 cp -a isdnlog/isdnlog/isdnlog.8 ${DESTDIR}/usr/man/man8
