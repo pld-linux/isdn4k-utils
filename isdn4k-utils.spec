@@ -20,14 +20,14 @@ BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
 BuildRequires:	ppp-plugin-devel
+BuildRequires:	rpmbuild(macros) >= 1.145
 BuildRequires:	tcl-devel >= 8.3.4-10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 %define		xincludedir	/usr/X11R6/include/X11
 %define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
-%define		ppp_ver		%(rpm -q --qf '%%{VERSION}' ppp-plugin-devel)
-%define		ppp_pkg_ver	%(rpm -q --queryformat "%%{VERSION}-%%{RELEASE}" ppp-plugin-devel)
+%define		ppp_ver		%(awk -F'"' '/VERSION/ { print $2 }' /usr/include/pppd/patchlevel.h)
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
@@ -66,7 +66,7 @@ Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools.
 Summary:	capiplugin for pppd-%{ppp_ver}
 Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
-Requires:	ppp = %{ppp_pkg_ver}
+%requires_eq_to	ppp ppp-plugin-devel
 
 %description -n ppp-plugin-capi
 capiplugin for pppd-%{ppp_ver}.
