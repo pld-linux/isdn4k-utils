@@ -19,7 +19,7 @@ URL:		http://www.isdn4linux.de/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
-BuildRequires:	ncurses-devel
+BuildRequires:	ncurses-ext-devel
 BuildRequires:	ppp-plugin-devel
 BuildRequires:	rpmbuild(macros) >= 1.145
 BuildRequires:	tcl-devel >= 8.3.4-10
