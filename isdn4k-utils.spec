@@ -24,11 +24,8 @@ BuildRequires:	/usr/sbin/pppd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
-%define		_xprefix	/usr/X11R6
-%define		_xbindir	%{_xprefix}/bin
-%define		_xincludedir	%{_xprefix}/include
-%define		_xlibdir	%{_xprefix}/lib
-%define		_xmandir	%{_xprefix}/man
+%define		xincludedir	/usr/X11R6/include/X11
+%define		appdefsdir	/usr/X11R6/lib/X11/app-defaults
 %define		ppp_ver		%(/usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
 %define		ppp_pkg_ver	%(rpm -q --queryformat "%%{VERSION}-%%{RELEASE}" ppp-plugin-devel)
 
@@ -213,20 +210,18 @@ cp %{SOURCE1} .config
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq,%{_xbindir}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq}
 
 %{__make} install \
 	PPPVERSION=%{ppp_ver} \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.txt \
+mv -f $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.txt \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
-mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.html \
+mv -f $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.html \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
-mv $RPM_BUILD_ROOT%{_datadir}/doc/vbox/*.txt \
+mv -f $RPM_BUILD_ROOT%{_datadir}/doc/vbox/*.txt \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
-mv $RPM_BUILD_ROOT%{_bindir}/{xisdnload,xmonisdn} \
-	$RPM_BUILD_ROOT%{_xbindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -241,23 +236,27 @@ rm -rf $RPM_BUILD_ROOT
 %doc FAQ/{_howto,_example}
 %dir %{_sysconfdir}/isdn
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/isdn/*
-%attr(755,root,root) %{_bindir}/[!c]*
+%attr(755,root,root) %{_bindir}/[!cx]*
 %attr(755,root,root) %{_sbindir}/[!acr]*
 %dir %{_libdir}/isdn
 %{_libdir}/isdn/*
 %dir /var/lock/isdn
-%{_mandir}/man[1457]/*
+%{_mandir}/man1/[!x]*
+%{_mandir}/man[457]/*
 %{_mandir}/man8/[!ac]*
+%{_mandir}/man8/.isdnctrl_conf.8*
 
 %files x11
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_xbindir}/*
-%{_xlibdir}/X11/app-defaults/XISDNLoad
-%{_xmandir}/man1/*
+%attr(755,root,root) %{_bindir}/xisdnload
+%attr(755,root,root) %{_bindir}/xmonisdn
+%{appdefsdir}/XISDNLoad
+%{_mandir}/man1/xisdnload.1x*
+%{_mandir}/man1/xmonisdn.1x*
 
 %files devel
 %defattr(644,root,root,755)
-%{_xincludedir}/X11/bitmaps/*
+%{xincludedir}/bitmaps/*
 
 %files -n capi-libs-static
 %defattr(644,root,root,755)
@@ -284,6 +283,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc rcapid/README
 %attr(755,root,root) %{_sbindir}/[ar]*
 %attr(755,root,root) %{_bindir}/capiinfo
+%attr(755,root,root) %{_bindir}/capifax*
 %{_mandir}/man8/avmcapi*
 %{_mandir}/man8/capiinfo*
 
