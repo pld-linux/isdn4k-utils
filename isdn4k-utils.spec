@@ -43,7 +43,7 @@ Utilitários para configuração do subsistema ISDN.
 Summary:	Utilities for the kernel ISDN-subsystem - frontend for X11
 Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra - nakladki dla X11
 Group:		Applications/Communications
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description x11
 Utilities for the kernel ISDN-subsystem and some contributions (X11).
@@ -55,7 +55,7 @@ Narzêdzia dla podsystemu ISDN j±dra, nak³adki graficzne (X11).
 Summary:	Developement files for isdn4k-tools
 Summary(pl):	Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description devel
 Developement files for isdn4k-tools.
@@ -123,7 +123,7 @@ w wersji 2.0.
 Summary:	Static libraries for CAPI 2.0
 Summary(pl):	Statyczne biblioteki dla CAPI 2.0
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description -n capi-libs-static
 The Common ISDN Application Programming Interface (CAPI for short)
