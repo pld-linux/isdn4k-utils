@@ -3,7 +3,7 @@ Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	040111
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL v2
 Group:		Applications/Communications
@@ -143,7 +143,7 @@ w wersji 2.0.
 Summary:	CAPI 2.0 - development stuff
 Summary(pl):	CAPI 2.0 - zasoby programistyczne
 Group:		Development/Libraries
-Requires:	capi-libs = %{version}-%{release}
+Requires:	capi-libs = %{epoch}:%{version}-%{release}
 
 %description -n capi-devel
 The Common ISDN Application Programming Interface (CAPI for short)
