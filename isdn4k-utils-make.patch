@@ -1,0 +1,383 @@
+--- ./act2000/Makefile.in.org	Mon Jul 22 04:00:30 2002
++++ ./act2000/Makefile.in	Thu Aug  1 14:55:54 2002
+@@ -18,9 +18,9 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_DATA		= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+--- ./areacode/Makefile.in.org	Sat Jun 19 11:39:59 1999
++++ ./areacode/Makefile.in	Thu Aug  1 14:56:30 2002
+@@ -12,7 +12,7 @@
+ 	# only ones that _really_ exist on _every_ system.
+ 	#
+ 	BUILDOPTS   := $(DATAOPTS)
+-	INSTALLOPTS := $(DATAOPTS) INSTALL="install -o 0 -g 0 -m 644"
++	INSTALLOPTS := $(DATAOPTS) INSTALL="install -m 644"
+ endif
+ 
+ all: .depend
+--- ./avmb1/Makefile.in.org	Mon Jul 22 04:00:30 2002
++++ ./avmb1/Makefile.in	Thu Aug  1 14:57:01 2002
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+--- ./divertctrl/Makefile.in.org	Mon Jul 22 04:00:31 2002
++++ ./divertctrl/Makefile.in	Thu Aug  1 14:57:29 2002
+@@ -13,8 +13,8 @@
+ MODULES			= divertctrl.o
+ MANPAGE			= divertctrl.8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ ifeq (../.config,$(wildcard ../.config))
+--- ./doc/Makefile.in.org	Fri Dec 24 15:14:50 1999
++++ ./doc/Makefile.in	Thu Aug  1 14:57:51 2002
+@@ -9,7 +9,7 @@
+ SED				= @SED@
+ MANDIR			= @CONFIG_MANDIR@
+ MANPAGES		= ttyI.4 isdninfo.4 isdn_audio.4 isdnctrl.4 isdn_cause.7
+-INSTALL_MAN		= @INSTALL@ -o 0 -g 0 -m 0644
++INSTALL_MAN		= @INSTALL@ -m 0644
+ prefix			= @prefix@
+ 
+ %.1: %.man
+--- ./eicon/Makefile.in.org	Mon Jul 22 04:00:32 2002
++++ ./eicon/Makefile.in	Thu Aug  1 14:58:31 2002
+@@ -22,9 +22,9 @@
+ DATA_DIR		= @CONFIG_DATADIR@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_DATA		= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
+ CC				= @CC@
+ COPTS			= -DDATADIR=\"$(shell echo $(DESTDIR)$(DATA_DIR))\"
+ 
+--- ./hisax/Makefile.in.org	Mon Jul 22 04:00:33 2002
++++ ./hisax/Makefile.in	Thu Aug  1 14:59:04 2002
+@@ -16,9 +16,9 @@
+ DATADIR			= @CONFIG_DATADIR@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_DATA		= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ ifeq ("@CONFIG_HISAXCTRL@","y")
+--- ./icn/Makefile.in.org	Mon Jul 22 04:00:34 2002
++++ ./icn/Makefile.in	Thu Aug  1 14:59:52 2002
+@@ -17,10 +17,10 @@
+ DATADIR			= @CONFIG_DATADIR@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_DATA	= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
+-CC				= @CC@
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_DATA		= $(INSTALL) -m 0644
++INSTALL_MAN		= $(INSTALL) -m 0644
++CC			= @CC@
+ COPTS			=
+ 
+ ifeq ("@CONFIG_ICNCTRL_DEBUG@","y")
+--- ./imon/Makefile.in.org	Mon Jul 22 04:00:34 2002
++++ ./imon/Makefile.in	Thu Aug  1 15:00:18 2002
+@@ -18,8 +18,8 @@
+ SBINDIR			= @CONFIG_SBINDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+--- ./imontty/Makefile.org	Mon Jul 22 04:00:35 2002
++++ ./imontty/Makefile	Thu Aug  1 16:17:30 2002
+@@ -19,7 +19,7 @@
+ endif
+ 
+ INSTALL=install
+-INSTALL_MAN=$(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_MAN=$(INSTALL) -m 0644
+ MANPAGE=imontty.8
+ 
+ CCFLAGS=-O2
+@@ -52,10 +52,10 @@
+ 	mkdir -p $(DESTDIR)$(MAN8DIR)
+ 	$(INSTALL_MAN) $< $(DESTDIR)$(MAN8DIR)/$(MANPAGE)
+ 
+-install: $(PROGS) rootperm install-man
+-	install -s -o 0 -g 0 -m 0755 $(PROGS) $(DESTDIR)$(CONFIG_SBINDIR)
++install: $(PROGS) install-man
++	install -s $(PROGS) $(DESTDIR)$(CONFIG_SBINDIR)
+ 
+-uninstall: rootperm
++uninstall:
+ 	for i in $(PROGS) ; do rm -f $(DESTDIR)$(CONFIG_SBINDIR)/$$i; done
+ 
+ clean:
+--- ./ipppd/Makefile.in.org	Mon Jul 22 04:00:35 2002
++++ ./ipppd/Makefile.in	Thu Aug  1 15:02:45 2002
+@@ -11,10 +11,10 @@
+ MANDIR        := @CONFIG_MANDIR@
+ CC            := @CC@
+ INSTALL       := @INSTALL@
+-INSTALL_DIR   := $(INSTALL) -m 0755 -o 0 -g 0 -d
+-INSTALL_SBIN  := $(INSTALL) -m 0700 -o 0 -g 0
+-INSTALL_BIN   := $(INSTALL) -m 0755 -o 0 -g 0
+-INSTALL_DATA  := $(INSTALL) -m 0644 -o 0 -g 0
++INSTALL_DIR   := $(INSTALL) -m 0755 -d
++INSTALL_SBIN  := $(INSTALL) -m 0700
++INSTALL_BIN   := $(INSTALL) -m 0755
++INSTALL_DATA  := $(INSTALL) -m 0644
+ RADIUS_CLIENT_CONFIG_FILE := @RADIUS_CLIENT_CONFIG_FILE@
+ 
+ ifeq (@CONFIG_IPPPD_MSCHAP@,y)
+--- ./ipppstats/Makefile.in.org	Mon Jul 22 04:00:36 2002
++++ ./ipppstats/Makefile.in	Thu Aug  1 15:03:13 2002
+@@ -6,9 +6,9 @@
+ MANDIR       = @CONFIG_MANDIR@
+ CC           = @CC@
+ INSTALL      = @INSTALL@
+-INSTALL_SBIN = $(INSTALL) -m 755 -o 0 -g 0
+-INSTALL_DATA = $(INSTALL) -m 644 -o 0 -g 0
+-INSTALL_DIR  = $(INSTALL) -m 755 -o 0 -g 0 -d
++INSTALL_SBIN = $(INSTALL) -m 755
++INSTALL_DATA = $(INSTALL) -m 644
++INSTALL_DIR  = $(INSTALL) -m 755 -d
+ 
+ PPPSTATSRCS  = ipppstats.c
+ PPPSTATOBJS  = ipppstats.o
+--- ./iprofd/Makefile.in.org	Mon Jul 22 04:00:36 2002
++++ ./iprofd/Makefile.in	Thu Aug  1 15:03:56 2002
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+--- ./isdnctrl/Makefile.in.org	Mon Jul 22 04:00:37 2002
++++ ./isdnctrl/Makefile.in	Thu Aug  1 15:04:29 2002
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ CC				= @CC@ -DVERSION=\"@I4LVERSION@\"
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+--- ./isdnlog/tools/dest/Makefile.in.org	Thu Jan 31 21:01:12 2002
++++ ./isdnlog/tools/dest/Makefile.in	Thu Aug  1 13:22:24 2002
+@@ -20,9 +20,9 @@
+ SBINDIR			= @CONFIG_SBINDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM		= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
+-INSTALL_DATA		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
++INSTALL_DATA		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ DATADIR			= @datadir@
+--- ./isdnlog/tools/telrate/Makefile.in.org	Fri Dec 24 15:17:08 1999
++++ ./isdnlog/tools/telrate/Makefile.in	Thu Aug  1 15:22:44 2002
+@@ -8,8 +8,8 @@
+ CGIDIR		= @CGIDIR@
+ TELDIR		= @TELDIR@
+ INSTALL		= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0755
+-INSTALL_FILE	= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM	= $(INSTALL) -m 0755
++INSTALL_FILE	= $(INSTALL) -m 0644
+ 
+ FILES = index.html info.html *.jpg *.gif tt.js
+ 
+--- ./isdnlog/tools/zone/Makefile.in.org	Tue Jun 12 16:24:17 2001
++++ ./isdnlog/tools/zone/Makefile.in	Thu Aug  1 13:17:28 2002
+@@ -20,8 +20,8 @@
+ SBINDIR			= @CONFIG_SBINDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM		= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ #CC			= @CC@ -V2.7.2.3
+--- ./isdnlog/Makefile.in.org	Thu Aug  1 14:44:18 2002
++++ ./isdnlog/Makefile.in	Thu Aug  1 16:11:25 2002
+@@ -1475,15 +1475,15 @@
+ # autoconf isdnlog specific stuff
+ #
+ INSTALL			:= @INSTALL@
+-INSTALL_DIR		:= $(INSTALL) -m 0755 -o 0 -g 0 -d
+-INSTALL_SBIN		:= $(INSTALL) -m 0700 -o 0 -g 0
+-INSTALL_BIN		:= $(INSTALL) -m 0755 -o 0 -g 0
+-INSTALL_DATA		:= $(INSTALL) -m 0644 -o 0 -g 0
++INSTALL_DIR		:= $(INSTALL) -m 0755 -d
++INSTALL_SBIN		:= $(INSTALL) -m 0700
++INSTALL_BIN		:= $(INSTALL) -m 0755
++INSTALL_DATA		:= $(INSTALL) -m 0644
+ 
+ BZIP2                   := @BZIP2@
+ BUNZIP2                 := $(BZIP2) -f -d
+-AWK				= @AWK@
+-SED				= @SED@
++AWK			= @AWK@
++SED			= @SED@
+ 
+ LIBISDNDIR		:= @LIBISDNDIR@
+ I4LCONFDIR		:= @I4LCONFDIR@
+@@ -1741,10 +1741,11 @@
+ endif
+ 
+ rootperm:
+-	@echo 'main(int argc,char**argv){unlink(argv[0]);return(getuid()==0);}'>g
+-	@if gcc -x c -o G g && rm -f g && ./G ; then \
+-		echo ""; echo 'Do "make (un)install" as root!' ;echo ""; false; \
+-	fi
++	echo "No check"
++#	@echo 'main(int argc,char**argv){unlink(argv[0]);return(getuid()==0);}'>g
++#	@if gcc -x c -o G g && rm -f g && ./G ; then \
++#		echo ""; echo 'Do "make (un)install" as root!' ;echo ""; false; \
++#	fi
+ 
+ uninstall: 
+ 		if ps x | fgrep $(ISDNLOG) >/dev/null; then kill `cat $(RUNDIR)/isdnlog.isdnctrl0.pid` 2>/dev/null; fi
+--- ./lib/Makefile.in.org	Sun Dec 12 18:22:36 1999
++++ ./lib/Makefile.in	Thu Aug  1 15:06:14 2002
+@@ -11,7 +11,7 @@
+ 	# Install as root with numeric Id's, since these are the
+ 	# only ones that _really_ exist on _every_ system.
+ 	#
+-	INSTALLOPTS += INSTALL= install -o 0 -g 0 -m 644
++	INSTALLOPTS += INSTALL= install -m 644
+ endif
+ 
+ all: .depend
+--- ./loop/Makefile.in.org	Mon Jul 22 04:00:39 2002
++++ ./loop/Makefile.in	Thu Aug  1 15:07:17 2002
+@@ -13,8 +13,8 @@
+ MODULES			= loopctrl.o
+ MANPAGE			= loopctrl.8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM	= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ ifeq (../.config,$(wildcard ../.config))
+--- ./pcbit/Makefile.in.org	Mon Jul 22 04:00:40 2002
++++ ./pcbit/Makefile.in	Thu Aug  1 15:07:46 2002
+@@ -15,8 +15,8 @@
+ MANDIR			= @CONFIG_MANDIR@
+ MAN8DIR			= $(MANDIR)/man8
+ INSTALL			= @INSTALL@
+-INSTALL_PROGRAM		= $(INSTALL) -o 0 -g 0 -m 0750
+-INSTALL_MAN		= $(INSTALL) -o 0 -g 0 -m 0644
++INSTALL_PROGRAM		= $(INSTALL) -m 0750
++INSTALL_MAN		= $(INSTALL) -m 0644
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ CC				= @CC@
+--- ./vbox/Makefile.in.org	Thu Jan 31 21:05:40 2002
++++ ./vbox/Makefile.in	Thu Aug  1 15:20:52 2002
+@@ -14,33 +14,33 @@
+ # [*] Program to install binaries to the sbin directory (eg vboxgetty):      #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_SBIN	= @INSTALL@ -m 750 -o root -g root -s
++INSTALL_SBIN	= @INSTALL@ -m 750 -s
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install binaries to the bin directory (eg vboxconvert):     #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_BIN	= @INSTALL@ -m 755 -o root -g root -s
++INSTALL_BIN	= @INSTALL@ -m 755 -s
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install bash scripts to the bin directory (eg vboxplay):    #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_SHBIN	= @INSTALL@ -m 755 -o root -g root
++INSTALL_SHBIN	= @INSTALL@ -m 755
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install binaries to the bin directory and set the suid bit  #
+ #     (eg vboxbeep):                                                         #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_UBIN	= @INSTALL@ -m 4755 -o root -g root -s
++INSTALL_UBIN	= @INSTALL@ -m 4755 -s
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to install configurations to sysconf directory                 #
+ #     (eg vboxgetty.conf):                                                   #
+ #----------------------------------------------------------------------------#
+ 
+-INSTALL_SYSCONF	= @INSTALL@ -m 640 -o root -g root
++INSTALL_SYSCONF	= @INSTALL@ -m 640
+ 
+ #----------------------------------------------------------------------------#
+ # [*] Program to create missing directories:                                 #
+--- ./Makefile.org	Mon Jul 22 04:00:29 2002
++++ ./Makefile	Thu Aug  1 16:33:13 2002
+@@ -130,13 +130,13 @@
+ 		exit 1; \
+ 	fi
+ 
+-install: rootperm
++install:
+ 	set -e; for i in `echo $(SUBDIRS)`; do $(MAKE) -C $$i install; done
+ 	@if [ -c $(DESTDIR)/dev/isdnctrl0 ] && ls -l $(DESTDIR)/dev/isdnctrl0 | egrep "[[:space:]]45,[[:space:]]+64[[:space:]]" > /dev/null; \
+ 	then \
+ 		/bin/echo -e '(some) ISDN devices already exist, not creating them.\nUse scripts/makedev.sh manually if necessary.'; \
+ 	else \
+-		sh scripts/makedev.sh $(DESTDIR) ; \
++		echo "Not running creating devices"; \
+ 	fi
+ 
+ uninstall: rootperm
