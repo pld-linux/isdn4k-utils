@@ -9,7 +9,7 @@ Source0:	ftp://ftp.franken.de/pub/isdn4linux/v2.1/%{name}-%{nersion}.tar.gz
 Source1:	isdn4k-utils-%{version}.config
 Patch0:		isdn4k-utils-%{version}-COL.patch
 URL:		http://www.franken.de/ftp/pub/isdn4linux/
-BuildRoot:	/tmp/%{name}-%{nersion}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
@@ -69,7 +69,6 @@ if [ -n "$MANPATHS" ]; then
   find $MANPATHS -type f -print |
     xargs -r gzip -v9nf
 fi
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
