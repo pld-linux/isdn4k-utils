@@ -1,74 +1,113 @@
+# TODO:
+# - separate X11 package
+
 Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Name:		isdn4k-utils
-Version:	0112071200
-Release:	3
-License:	distributable
+Version:	0207290200
+Release:	1
+License:	GPL v2
 Group:		Applications/Communications
-Source0:	%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
 Source1:        %{name}.config
-Patch0:         %{name}-Makefiles.patch
-URL:		http://www.franken.de/ftp/pub/isdn4linux/
+Patch0:		%{name}-make.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool
+BuildRequires:	ncurses-devel
+URL:		http://www.isdn4linux.de/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
+
 %description -l pl
-U¿ytki dla podsystemu ISDN j±dra.
+Narzêdzia dla podsystemu ISDN j±dra.
+
+%package devel
+Summary:	Developement files for isdn4k-tools
+Summary(pl):	Rzeczy potrzebne do tworzenia z u¿yciem isdn4k-tools
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+
+%description devel
+Developement files for isdn4k-tools.
+
+%description -l pl devel
+Rzeczy potrzebne do tworzenia z u¿yciem isdn4k-tools.
+
+%package static
+Summary:	Static libraries for isdn4k-tools
+Summary(pl):	Statyczne biblioteki dla isdn4k-tools
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+
+%description static
+Static libraries for isdn4k-tools.
+
+%description -l pl static
+Statyczne biblioteki dla isdn4k-tools.
 
 %prep
-%setup0 -q
+%setup -q -n %{name}
 %patch0 -p1
 
-
-
 %build
+for i in capi20 capifax capiinfo capiinit rcapid; do
+	cd $i
+	rm -f missing
+	%{__libtoolize}
+	aclocal
+	%{__autoconf}
+	%{__automake}
+	cd ..
+done
 cp %{SOURCE1} .config
 %{__make} OPTIM="%{rpmcflags}" subconfig
-%{__make} CFLAGS="%{rpmcflags}"
-
-
+%{__make} CFLAGS="%{rpmcflags} -I/usr/include/ncurses/"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-#%{__make} devices
-
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/isdn,%{_sbindir},%{_bindir},/var/lock/isdn,%{_libdir},%{_includedir}} $RPM_BUILD_ROOT{/usr/X11R6/lib/X11/app-defaults} $RPM_BUILD_ROOT%{_mandir}/{man1,man2,man3,man4,man5,man6,man7,man8}
+install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq}
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
-#install isdnlog/isdnrep/isdnrep.1 $RPM_BUILD_ROOT%{_mandir}/man1
-#install isdnlog/isdnlog/isdnlog.8 $RPM_BUILD_ROOT%{_mandir}/man8
-#echo ".so ttyI.4" > $RPM_BUILD_ROOT%{_mandir}/man4/cui.4
-
-gzip -9nf COPYING README
+mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.txt \
+	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
+mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.html \
+	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
+mv $RPM_BUILD_ROOT%{_datadir}/doc/vbox/*.txt \
+	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING.gz README.gz 
-%dir /var/lock/isdn
-
-%dir %{_sysconfdir}/isdn
+%doc README FAQ NEWS LEGAL.ipppcomp ipppcomp/README.LZS Mini-FAQ/*.txt
+%doc isdnlog/{tools/dest/README*,isdnrep/CHANGES*}
+%doc FAQ/{_howto,_example}
 %config %{_sysconfdir}/isdn/*
-
-
+%attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_libdir}/*.so.*.*.*
+%{_libdir}/isdn/*
+%dir /var/lock/isdn
+%dir %{_sysconfdir}/isdn
+%dir %{_libdir}/isdn
+%{_mandir}/man[14578]/*
 
 /usr/X11R6/lib/X11/app-defaults/XISDNLoad
+/usr/X11R6/man/man1/*
 
-%attr(755,root,root) %{_bindir}/*
+%files devel
+%defattr(644,root,root,755)
+%{_libdir}/*.la
+%{_includedir}/*.h
+/usr/X11R6/include/X11/bitmaps/*
 
-
-#%dir %{_libdir}/isdn
-%{_libdir}/*
-
-#%{_libdir}/isdn/*
-#%{_libdir}/vbox
-
-%{_mandir}/*
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/*.a
