@@ -1,39 +1,29 @@
-%define Version 2.1b1
+Summary:	Utilities for the kernel ISDN-subsystem.
+Name:		isdn4k-utils
+Version:	2.1b1
+Release:	6
+Group:		Communication/ISDN
+Copyright:	distributable
+Source0:	ftp://ftp.franken.de/pub/isdn4linux/v2.1/%{name}-%{nersion}.tar.gz
+Source1:	isdn4k-utils-%{version}.config
+Patch0:		isdn4k-utils-%{version}-COL.patch
+URL:		http://www.franken.de/ftp/pub/isdn4linux/
+BuildRoot:	/tmp/%{name}-%{nersion}-root
 
-Summary     	: Utilities for the kernel ISDN-subsystem.
-Name        	: isdn4k-utils
-Version     	: %{Version}
-Release     	: 6
-Group       	: Communication/ISDN
-Copyright   	: distributable
-Packager    	: rf@lst.de (Ralf Flaxa)
-URL         	: http://www.franken.de/ftp/pub/isdn4linux/
-BuildRoot   	: /tmp/isdn4k-utils-%{Version}
-
-Source0: ftp://ftp.franken.de/pub/isdn4linux/v2.1/isdn4k-utils-%{Version}.tar.gz
-Source1: isdn4k-utils-%{Version}.config
-Patch0: isdn4k-utils-%{Version}-COL.patch
-
-
-%Description
+%description
 Utilities for the kernel ISDN-subsystem and some contributions.
 
-
-%Prep
-%setup
+%prep
+%setup -q
 %patch -P 0 -p1
 cp -p $RPM_SOURCE_DIR/isdn4k-utils-%{Version}.config .config
 
-
-%Build
+%build
 make OPTIM="$RPM_OPT_FLAGS" oldconfig
 make CFLAGS="$RPM_OPT_FLAGS"
 
-
-%Install
-DESTDIR=$RPM_BUILD_ROOT; export DESTDIR
-[ -n "`echo $DESTDIR | sed -n 's:^/tmp/[^.].*$:OK:p'`" ] && rm -rf $DESTDIR ||
-(echo "Invalid BuildRoot: '$DESTDIR'! Check this .spec ..."; exit 1) || exit 1
+%install
+rm -rf $RPM_BUILD_ROOT
 
 make devices
 
@@ -77,13 +67,10 @@ if [ -n "$MANPATHS" ]; then
 fi
 
 
-%Clean
-DESTDIR=$RPM_BUILD_ROOT;export DESTDIR;[ -n "$UID" ]&&[ "$UID" -gt 0 ]&&exit 0
-[ -n "`echo $DESTDIR | sed -n 's:^/tmp/[^.].*$:OK:p'`" ] && rm -rf $DESTDIR ||
-(echo "Invalid BuildRoot: '$DESTDIR'! Check this .spec ..."; exit 1) || exit 1
+%clean
+rm -rf $RPM_BUILD_ROOT
 
-
-%Files
+%files
 %doc COPYING README
 %dir /usr/doc/faq/isdn4linux
 /usr/doc/faq/isdn4linux/de-i4l-faq.asc
@@ -141,9 +128,3 @@ DESTDIR=$RPM_BUILD_ROOT;export DESTDIR;[ -n "$UID" ]&&[ "$UID" -gt 0 ]&&exit 0
 /usr/man/man8/iprofd.8*
 /usr/man/man8/isdnctrl.8*
 /usr/man/man8/telesctrl.8*
-
-
-%ChangeLog
-* Mon Jan 01 1997 ...
-
-$Id: isdn4k-utils.spec,v 1.1 1999-07-16 21:35:36 kloczek Exp $
