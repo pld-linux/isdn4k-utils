@@ -2,13 +2,13 @@ Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
-Version:	030611
+Version:	040111
 Epoch:		2
-Release:	2
+Release:	1
 License:	GPL v2
 Group:		Applications/Communications
-Source0:	http://popowo.ath.cx/~radek/%{name}-%{version}.tar.gz
-# Source0-md5:	811a1e962078d3867a9583de201536de
+Source0:	http://rk.pop.e-wro.pl/%{name}-%{version}.tar.gz
+# Source0-md5:	6955ecdcd7df5bc8fa2844fa9c45bbf6
 Source1:	%{name}.config
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-ppc.patch
@@ -189,7 +189,6 @@ zgodnego z CAPI sprzêtu ISDN.
 %endif
 %patch2 -p1
 %patch3 -p1
-
 %build
 for i in capi20 capifax capiinfo capiinit rcapid; do
 	cd $i
@@ -203,7 +202,9 @@ done
 
 cp %{SOURCE1} .config
 %{__make} subconfig \
-	OPTIM="%{rpmcflags}"
+	OPTIM="%{rpmcflags}"\
+	CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+
 %{__make} \
 	PPPVERSION=%{ppp_ver} \
 	CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
