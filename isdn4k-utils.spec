@@ -1,4 +1,5 @@
 Summary:	Utilities for the kernel ISDN-subsystem.
+Summary(pl):	U¿ytki dla podsystemu ISDN j±dra.
 Name:		isdn4k-utils
 Version:	2.1b1
 Release:	6
@@ -12,6 +13,9 @@ BuildRoot:	/tmp/%{name}-%{nersion}-root
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
+
+%description -l pl
+U¿ytki dla podsystemu ISDN j±dra.
 
 %prep
 %setup -q
