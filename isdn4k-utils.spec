@@ -27,7 +27,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		xincludedir	/usr/X11R6/include/X11
 %define		appdefsdir	/usr/X11R6/lib/X11/app-defaults
 %define		ppp_ver		%(/usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
-%define		ppp_pkg_ver	%(rpm -q --queryformat "%%{VERSION}-%%{RELEASE}" ppp-plugin-devel)
 
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
@@ -66,8 +65,7 @@ Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools.
 Summary:	capiplugin for pppd-%{ppp_ver}
 Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
-Requires:	ppp = %{ppp_pkg_ver}
-BuildRequires:	ppp-plugin-devel
+Requires:	ppp = %{ppp_ver}
 
 %description -n ppp-plugin-capi
 capiplugin for pppd-%{ppp_ver}.
