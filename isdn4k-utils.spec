@@ -3,8 +3,8 @@ Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	040111
+Release:	2
 Epoch:		2
-Release:	1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://rk.pop.e-wro.pl/%{name}-%{version}.tar.gz
@@ -19,14 +19,14 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
+BuildRequires:	ppp-plugin-devel
 BuildRequires:	tcl-devel >= 8.3.4-10
-BuildRequires:	/usr/sbin/pppd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 %define		xincludedir	/usr/X11R6/include/X11
 %define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
-%define		ppp_ver		%(/usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
+%define		ppp_ver		%(rpm -q --qf '%%{VERSION}' ppp-plugin-devel)
 %define		ppp_pkg_ver	%(rpm -q --queryformat "%%{VERSION}-%%{RELEASE}" ppp-plugin-devel)
 
 %description
@@ -42,7 +42,7 @@ Utilitários para configuração do subsistema ISDN.
 Summary:	Utilities for the kernel ISDN-subsystem - frontend for X11
 Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra - nakladki dla X11
 Group:		Applications/Communications
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description x11
 Utilities for the kernel ISDN-subsystem and some contributions (X11).
@@ -54,7 +54,7 @@ Narzêdzia dla podsystemu ISDN j±dra, nak³adki graficzne (X11).
 Summary:	Developement files for isdn4k-tools
 Summary(pl):	Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description devel
 Developement files for isdn4k-tools.
@@ -67,7 +67,6 @@ Summary:	capiplugin for pppd-%{ppp_ver}
 Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
 Requires:	ppp = %{ppp_pkg_ver}
-BuildRequires:	ppp-plugin-devel
 
 %description -n ppp-plugin-capi
 capiplugin for pppd-%{ppp_ver}.
@@ -122,7 +121,7 @@ w wersji 2.0.
 Summary:	Static libraries for CAPI 2.0
 Summary(pl):	Statyczne biblioteki dla CAPI 2.0
 Group:		Development/Libraries
-Requires:	capi-devel = %{epoch}:%{version}
+Requires:	capi-devel = %{epoch}:%{version}-%{release}
 
 %description -n capi-libs-static
 The Common ISDN Application Programming Interface (CAPI for short)
@@ -143,7 +142,7 @@ w wersji 2.0.
 Summary:	CAPI 2.0 - development stuff
 Summary(pl):	CAPI 2.0 - zasoby programistyczne
 Group:		Development/Libraries
-Requires:	capi-libs = %{version}
+Requires:	capi-libs = %{version}-%{release}
 
 %description -n capi-devel
 The Common ISDN Application Programming Interface (CAPI for short)
@@ -192,7 +191,6 @@ zgodnego z CAPI sprzêtu ISDN.
 %build
 for i in capi20 capifax capiinfo capiinit rcapid; do
 	cd $i
-	rm -f missing
 	%{__libtoolize}
 	%{__aclocal}
 	%{__autoconf}
