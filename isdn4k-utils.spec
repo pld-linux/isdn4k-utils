@@ -63,7 +63,7 @@ Developement files for isdn4k-tools.
 %description devel -l pl
 Pliki potrzebne do programowania z u¿yciem isdn4k-tools.
 
-%package -n  ppp-plugin-capi
+%package -n ppp-plugin-capi
 Summary:	capiplugin for pppd-%{ppp_ver}
 Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
