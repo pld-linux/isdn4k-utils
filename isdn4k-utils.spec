@@ -25,7 +25,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 %define		xincludedir	/usr/X11R6/include/X11
-%define		appdefsdir	/usr/X11R6/lib/X11/app-defaults
+%define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
 %define		ppp_ver		%(/usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
 %define		ppp_pkg_ver	%(rpm -q --queryformat "%%{VERSION}-%%{RELEASE}" ppp-plugin-devel)
 
@@ -250,7 +250,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/xisdnload
 %attr(755,root,root) %{_bindir}/xmonisdn
-%{appdefsdir}/XISDNLoad
+%{_appdefsdir}/XISDNLoad
 %{_mandir}/man1/xisdnload.1x*
 %{_mandir}/man1/xmonisdn.1x*
 
