@@ -3,7 +3,7 @@ Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	040111
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL v2
 Group:		Applications/Communications
@@ -53,7 +53,7 @@ Narzêdzia dla podsystemu ISDN j±dra, nak³adki graficzne (X11).
 
 %package devel
 Summary:	Developement files for isdn4k-tools
-Summary(pl):	Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools
+Summary(pl):	Pliki potrzebne do programowania z u¿yciem isdn4k-tools
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -61,7 +61,7 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 Developement files for isdn4k-tools.
 
 %description devel -l pl
-Rzeczy potrzebne do programowania z u¿yciem isdn4k-tools.
+Pliki potrzebne do programowania z u¿yciem isdn4k-tools.
 
 %package -n  ppp-plugin-capi
 Summary:	capiplugin for pppd-%{ppp_ver}
@@ -242,8 +242,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/isdn/*
 %attr(755,root,root) %{_bindir}/[!cx]*
 %attr(755,root,root) %{_sbindir}/[!acr]*
-%dir %{_libdir}/isdn
-%{_libdir}/isdn/*
+%{_prefix}/lib/isdn
 %dir /var/lock/isdn
 %{_mandir}/man1/[!x]*
 %{_mandir}/man[457]/*
