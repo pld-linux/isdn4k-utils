@@ -4,13 +4,14 @@
 Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Name:		isdn4k-utils
-Version:	0207290200
+Version:	0208190200
 Release:	1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
 Source1:        %{name}.config
 Patch0:		%{name}-make.patch
+Patch1:		%{name}-ppc.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -53,6 +54,9 @@ Statyczne biblioteki dla isdn4k-tools.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%ifarch ppc
+%patch1 -p1
+%endif
 
 %build
 for i in capi20 capifax capiinfo capiinit rcapid; do
