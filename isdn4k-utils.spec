@@ -4,7 +4,7 @@ Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	030611
 Epoch:		2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://popowo.ath.cx/~radek/%{name}-%{version}.tar.gz
@@ -19,6 +19,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
+BuildRequires:	pppd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
@@ -203,14 +204,18 @@ for i in capi20 capifax capiinfo capiinit rcapid; do
 done
 
 cp %{SOURCE1} .config
-%{__make} OPTIM="%{rpmcflags}" subconfig
-%{__make} PPPVERSION=%{ppp_ver} CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses/"
+%{__make} subconfig \
+	OPTIM="%{rpmcflags}"
+%{__make} PPPVERSION=%{ppp_ver} \
+	CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses/"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq,%{_xbindir}}
 
-%{__make} PPPVERSION=%{ppp_ver} DESTDIR=$RPM_BUILD_ROOT install
+%{__make} install \
+	PPPVERSION=%{ppp_ver} \
+	DESTDIR=$RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.txt \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
