@@ -2,16 +2,18 @@ Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
-Version:	030314
+Version:	030611
 Epoch:		2
 Release:	1
 License:	GPL v2
 Group:		Applications/Communications
-Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
+Source0:	http://popowo.ath.cx/~radek/%{name}-%{version}.tar.gz
+# Source0-md5:	811a1e962078d3867a9583de201536de
 Source1:	%{name}.config
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-ppc.patch
 Patch2:		%{name}-pppdcapiplugin.patch
+Patch3:		%{name}-isdnlog_dont_touch_etc_services.patch
 URL:		http://www.isdn4linux.de/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -187,6 +189,7 @@ zgodnego z CAPI sprzêtu ISDN.
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
 
 %build
 for i in capi20 capifax capiinfo capiinit rcapid; do
@@ -201,13 +204,13 @@ done
 
 cp %{SOURCE1} .config
 %{__make} OPTIM="%{rpmcflags}" subconfig
-%{__make} PPPVERSIONS=%{ppp_ver} CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses/"
+%{__make} PPPVERSION=%{ppp_ver} CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses/"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn,%{_datadir}/doc/%{name}-%{version}/faq,%{_xbindir}}
 
-%{__make} PPPVERSIONS=%{ppp_ver} DESTDIR=$RPM_BUILD_ROOT install
+%{__make} PPPVERSION=%{ppp_ver} DESTDIR=$RPM_BUILD_ROOT install
 
 mv $RPM_BUILD_ROOT%{_datadir}/doc/isdn4linux/faq/*.txt \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}/faq
