@@ -3,7 +3,7 @@ Summary(pl):	U¿ytki dla podsystemu ISDN j±dra
 Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	0208190200
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	ftp://ftp.suse.com/pub/isdn4linux/v2.1/isdn4k-utils/%{name}-%{version}.tar.gz
@@ -40,6 +40,7 @@ Summary:	Utilities for the kernel ISDN-subsystem - frontend for X11
 Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra - nakladki dla X11
 Group:		Applications/Communications
 Requires:	%{name} = %{version}
+
 %description x11
 Utilities for the kernel ISDN-subsystem and some contributions (X11).
 
@@ -65,10 +66,10 @@ Group:		Applications/Communications
 Requires:	ppp = %{ppp_ver}
 
 %description -n ppp-plugin-capi
-capiplugin for pppd-%{ppp_ver}
+capiplugin for pppd-%{ppp_ver}.
 
 %description -n ppp-plugin-capi -l pl
-Wtyczka capi dla pppd w wersji %{ppp_ver}
+Wtyczka capi dla pppd w wersji %{ppp_ver}.
 
 %package -n capi
 Summary:	Program which can initialize CAPI hardware
@@ -76,22 +77,22 @@ Summary(pl):	Program, który inicjalizuje sprzêt ISDN zgodny z CAPI
 Group:		Applications/Communications
 
 %description -n capi
-The Common ISDN Application Programming Interface - CAPI for short
-- opens up a new dimension in communication technologies. It provides
-  a uniform, independent interface to ISDN hardware components.
+The Common ISDN Application Programming Interface - CAPI for short -
+opens up a new dimension in communication technologies. It provides a
+uniform, independent interface to ISDN hardware components.
 
 This package contains program which initialize your CAPI hardware. You
-shoul install appropriate kernel module first and edit /etc/capi.conf.
+should install appropriate kernel module first and edit
+/etc/capi.conf.
 
 %description -n capi -l pl
 Standard Common ISDN Application Programming Interface - w skrócie
-CAPI
-- otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych. Dostarcza
-  ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+CAPI - otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych.
+Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
 
-Ten pakiet zawiera program, który zainicjuje twoj± kartê ISDN zgodn± z
-CAPI Powiniene¶ zaopatrzyæ siê w odpowiedni modu³ j±dra i wyedytowaæ
-plik /etc/capi.conf.
+Ten pakiet zawiera program inicjalizuj±cy kartê ISDN zgodn± z CAPI.
+Trzeba zaopatrzyæ siê w odpowiedni modu³ j±dra i wyedytowaæ plik
+/etc/capi.conf.
 
 %package -n capi-libs
 Summary:	CAPI 2.0 - shared library
@@ -111,7 +112,7 @@ CAPI) otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych.
 Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
 
 Ten pakiet zawiera bibliotekê dzielon±, która realizuje standard CAPI
-w wersji 2.0
+w wersji 2.0.
 
 %package -n capi-libs-static
 Summary:	Static libraries for CAPI 2.0
@@ -132,7 +133,7 @@ CAPI) otwiera nowy wymiar w ¶wiecie technologi komunikacyjnych.
 Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
 
 Ten pakiet zawiera bibliotekê statyczn±, która realizuje standard CAPI
-w wersji 2.0
+w wersji 2.0.
 
 %package -n capi-devel
 Summary:	CAPI 2.0 - development staff
@@ -214,11 +215,11 @@ mv $RPM_BUILD_ROOT%{_datadir}/doc/vbox/*.txt \
 mv $RPM_BUILD_ROOT%{_bindir}/{xisdnload,xmonisdn} \
 	$RPM_BUILD_ROOT%{_xbindir}
 
-%post -n capi-libs -p %{_sbindir}/ldconfig
-%postun -n capi-libs -p %{_sbindir}/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-n capi-libs -p /sbin/ldconfig
+%postun	-n capi-libs -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
