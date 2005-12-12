@@ -178,8 +178,8 @@ Standard Common ISDN Application Programming Interface (w skrócie
 CAPI) otwiera nowy wymiar w ¶wiecie technologii komunikacyjnych.
 Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
 
-Ten pakiet zawiera programy, które potrafi± zrobiæ u¿ytek ze
-zgodnego z CAPI sprzêtu ISDN.
+Ten pakiet zawiera programy, które potrafi± zrobiæ u¿ytek ze zgodnego
+z CAPI sprzêtu ISDN.
 
 %prep
 %setup -q -n %{name}
@@ -239,7 +239,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc isdnlog/{tools/dest/README*,isdnrep/CHANGES*}
 %doc FAQ/{_howto,_example}
 %dir %{_sysconfdir}/isdn
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/isdn/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/*
 %attr(755,root,root) %{_bindir}/[!cx]*
 %attr(755,root,root) %{_sbindir}/[!acr]*
 %{_prefix}/lib/isdn
