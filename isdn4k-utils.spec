@@ -205,11 +205,11 @@ cp %{SOURCE1} .config
 %{__make} subconfig \
 	CONFIG_LIBDIR=%{_libdir} \
 	OPTIM="%{rpmcflags}"\
-	CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+	CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
 
 %{__make} \
 	PPPVERSION=%{ppp_ver} \
-	CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+	CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
 
 %install
 rm -rf $RPM_BUILD_ROOT
