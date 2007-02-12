@@ -1,6 +1,6 @@
 Summary:	Utilities for the kernel ISDN-subsystem
-Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra
-Summary(pt_BR):	Utilitários para configuração do subsistema ISDN
+Summary(pl.UTF-8):   NarzÄ™dzia dla podsystemu ISDN jÄ…dra
+Summary(pt_BR.UTF-8):   UtilitÃ¡rios para configuraÃ§Ã£o do subsistema ISDN
 Name:		isdn4k-utils
 Version:	040111
 Release:	4
@@ -33,51 +33,51 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Utilities for the kernel ISDN-subsystem and some contributions.
 
-%description -l pl
-Narzêdzia dla podsystemu ISDN j±dra.
+%description -l pl.UTF-8
+NarzÄ™dzia dla podsystemu ISDN jÄ…dra.
 
-%description -l pt_BR
-Utilitários para configuração do subsistema ISDN.
+%description -l pt_BR.UTF-8
+UtilitÃ¡rios para configuraÃ§Ã£o do subsistema ISDN.
 
 %package x11
 Summary:	Utilities for the kernel ISDN-subsystem - frontend for X11
-Summary(pl):	Narzêdzia dla podsystemu ISDN j±dra - nakladki dla X11
+Summary(pl.UTF-8):   NarzÄ™dzia dla podsystemu ISDN jÄ…dra - nakladki dla X11
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description x11
 Utilities for the kernel ISDN-subsystem and some contributions (X11).
 
-%description x11 -l pl
-Narzêdzia dla podsystemu ISDN j±dra, nak³adki graficzne (X11).
+%description x11 -l pl.UTF-8
+NarzÄ™dzia dla podsystemu ISDN jÄ…dra, nakÅ‚adki graficzne (X11).
 
 %package devel
 Summary:	Developement files for isdn4k-tools
-Summary(pl):	Pliki potrzebne do programowania z u¿yciem isdn4k-tools
+Summary(pl.UTF-8):   Pliki potrzebne do programowania z uÅ¼yciem isdn4k-tools
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description devel
 Developement files for isdn4k-tools.
 
-%description devel -l pl
-Pliki potrzebne do programowania z u¿yciem isdn4k-tools.
+%description devel -l pl.UTF-8
+Pliki potrzebne do programowania z uÅ¼yciem isdn4k-tools.
 
 %package -n ppp-plugin-capi
 Summary:	capiplugin for pppd-%{ppp_ver}
-Summary(pl):	Wtyczka capi dla pppd w wersji %{ppp_ver}
+Summary(pl.UTF-8):   Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
 %{requires_eq_to ppp ppp-plugin-devel}
 
 %description -n ppp-plugin-capi
 capiplugin for pppd-%{ppp_ver}.
 
-%description -n ppp-plugin-capi -l pl
+%description -n ppp-plugin-capi -l pl.UTF-8
 Wtyczka capi dla pppd w wersji %{ppp_ver}.
 
 %package -n capi
 Summary:	Program which can initialize CAPI hardware
-Summary(pl):	Program, który inicjalizuje sprzêt ISDN zgodny z CAPI
+Summary(pl.UTF-8):   Program, ktÃ³ry inicjalizuje sprzÄ™t ISDN zgodny z CAPI
 Group:		Applications/Communications
 
 %description -n capi
@@ -89,18 +89,18 @@ This package contains program which initialize your CAPI hardware. You
 should install appropriate kernel module first and edit
 /etc/capi.conf.
 
-%description -n capi -l pl
-Standard Common ISDN Application Programming Interface - w skrócie
-CAPI - otwiera nowy wymiar w ¶wiecie technologii komunikacyjnych.
-Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+%description -n capi -l pl.UTF-8
+Standard Common ISDN Application Programming Interface - w skrÃ³cie
+CAPI - otwiera nowy wymiar w Å›wiecie technologii komunikacyjnych.
+Dostarcza ujednolicony, niezaleÅ¼ny interfejs do sprzÄ™tu ISDN.
 
-Ten pakiet zawiera program inicjalizuj±cy kartê ISDN zgodn± z CAPI.
-Trzeba zaopatrzyæ siê w odpowiedni modu³ j±dra i zmodyfikowaæ plik
+Ten pakiet zawiera program inicjalizujÄ…cy kartÄ™ ISDN zgodnÄ… z CAPI.
+Trzeba zaopatrzyÄ‡ siÄ™ w odpowiedni moduÅ‚ jÄ…dra i zmodyfikowaÄ‡ plik
 /etc/capi.conf.
 
 %package -n capi-libs
 Summary:	CAPI 2.0 - shared library
-Summary(pl):	Biblioteka dzielona CAPI 2.0
+Summary(pl.UTF-8):   Biblioteka dzielona CAPI 2.0
 Group:		Libraries
 
 %description -n capi-libs
@@ -110,17 +110,17 @@ uniform, independent interface to ISDN hardware components.
 
 This package contains shared library which provide CAPI 2.0.
 
-%description -n capi-libs -l pl
-Standard Common ISDN Application Programming Interface (w skrócie
-CAPI) otwiera nowy wymiar w ¶wiecie technologii komunikacyjnych.
-Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+%description -n capi-libs -l pl.UTF-8
+Standard Common ISDN Application Programming Interface (w skrÃ³cie
+CAPI) otwiera nowy wymiar w Å›wiecie technologii komunikacyjnych.
+Dostarcza ujednolicony, niezaleÅ¼ny interfejs do sprzÄ™tu ISDN.
 
-Ten pakiet zawiera bibliotekê dzielon±, która realizuje standard CAPI
+Ten pakiet zawiera bibliotekÄ™ dzielonÄ…, ktÃ³ra realizuje standard CAPI
 w wersji 2.0.
 
 %package -n capi-libs-static
 Summary:	Static libraries for CAPI 2.0
-Summary(pl):	Statyczne biblioteki dla CAPI 2.0
+Summary(pl.UTF-8):   Statyczne biblioteki dla CAPI 2.0
 Group:		Development/Libraries
 Requires:	capi-devel = %{epoch}:%{version}-%{release}
 
@@ -131,17 +131,17 @@ uniform, independent interface to ISDN hardware components.
 
 This package contains static library which provide CAPI 2.0.
 
-%description -n capi-libs-static -l pl
-Standard Common ISDN Application Programming Interface (w skrócie
-CAPI) otwiera nowy wymiar w ¶wiecie technologii komunikacyjnych.
-Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+%description -n capi-libs-static -l pl.UTF-8
+Standard Common ISDN Application Programming Interface (w skrÃ³cie
+CAPI) otwiera nowy wymiar w Å›wiecie technologii komunikacyjnych.
+Dostarcza ujednolicony, niezaleÅ¼ny interfejs do sprzÄ™tu ISDN.
 
-Ten pakiet zawiera bibliotekê statyczn±, która realizuje standard CAPI
+Ten pakiet zawiera bibliotekÄ™ statycznÄ…, ktÃ³ra realizuje standard CAPI
 w wersji 2.0.
 
 %package -n capi-devel
 Summary:	CAPI 2.0 - development stuff
-Summary(pl):	CAPI 2.0 - zasoby programistyczne
+Summary(pl.UTF-8):   CAPI 2.0 - zasoby programistyczne
 Group:		Development/Libraries
 Requires:	capi-libs = %{epoch}:%{version}-%{release}
 
@@ -152,17 +152,17 @@ uniform, independent interface to ISDN hardware components.
 
 This package contains developement files for CAPI 2.0.
 
-%description -n capi-devel -l pl
-Standard Common ISDN Application Programming Interface (w skrócie
-CAPI) otwiera nowy wymiar w ¶wiecie technologii komunikacyjnych.
-Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+%description -n capi-devel -l pl.UTF-8
+Standard Common ISDN Application Programming Interface (w skrÃ³cie
+CAPI) otwiera nowy wymiar w Å›wiecie technologii komunikacyjnych.
+Dostarcza ujednolicony, niezaleÅ¼ny interfejs do sprzÄ™tu ISDN.
 
-Ten pakiet zawiera pliki niezbêdne przy tworzeniu programów
-wykorzystuj±cych standard CAPI 2.0
+Ten pakiet zawiera pliki niezbÄ™dne przy tworzeniu programÃ³w
+wykorzystujÄ…cych standard CAPI 2.0
 
 %package -n capi-tools
 Summary:	CAPI 2.0 - useful programs
-Summary(pl):	CAPI 2.0 - programy u¿ytkowe
+Summary(pl.UTF-8):   CAPI 2.0 - programy uÅ¼ytkowe
 Group:		Applications/Communications
 
 %description -n capi-tools
@@ -173,13 +173,13 @@ uniform, independent interface to ISDN hardware components.
 This package contains programs which can make use of your CAPI
 compilant ISDN hardware
 
-%description -n capi-tools -l pl
-Standard Common ISDN Application Programming Interface (w skrócie
-CAPI) otwiera nowy wymiar w ¶wiecie technologii komunikacyjnych.
-Dostarcza ujednolicony, niezale¿ny interfejs do sprzêtu ISDN.
+%description -n capi-tools -l pl.UTF-8
+Standard Common ISDN Application Programming Interface (w skrÃ³cie
+CAPI) otwiera nowy wymiar w Å›wiecie technologii komunikacyjnych.
+Dostarcza ujednolicony, niezaleÅ¼ny interfejs do sprzÄ™tu ISDN.
 
-Ten pakiet zawiera programy, które potrafi± zrobiæ u¿ytek ze zgodnego
-z CAPI sprzêtu ISDN.
+Ten pakiet zawiera programy, ktÃ³re potrafiÄ… zrobiÄ‡ uÅ¼ytek ze zgodnego
+z CAPI sprzÄ™tu ISDN.
 
 %prep
 %setup -q -n %{name}
