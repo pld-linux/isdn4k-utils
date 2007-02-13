@@ -1,6 +1,6 @@
 Summary:	Utilities for the kernel ISDN-subsystem
-Summary(pl.UTF-8):   Narzędzia dla podsystemu ISDN jądra
-Summary(pt_BR.UTF-8):   Utilitários para configuração do subsistema ISDN
+Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra
+Summary(pt_BR.UTF-8):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	040111
 Release:	4
@@ -41,7 +41,7 @@ Utilitários para configuração do subsistema ISDN.
 
 %package x11
 Summary:	Utilities for the kernel ISDN-subsystem - frontend for X11
-Summary(pl.UTF-8):   Narzędzia dla podsystemu ISDN jądra - nakladki dla X11
+Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra - nakladki dla X11
 Group:		Applications/Communications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -53,7 +53,7 @@ Narzędzia dla podsystemu ISDN jądra, nakładki graficzne (X11).
 
 %package devel
 Summary:	Developement files for isdn4k-tools
-Summary(pl.UTF-8):   Pliki potrzebne do programowania z użyciem isdn4k-tools
+Summary(pl.UTF-8):	Pliki potrzebne do programowania z użyciem isdn4k-tools
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -65,7 +65,7 @@ Pliki potrzebne do programowania z użyciem isdn4k-tools.
 
 %package -n ppp-plugin-capi
 Summary:	capiplugin for pppd-%{ppp_ver}
-Summary(pl.UTF-8):   Wtyczka capi dla pppd w wersji %{ppp_ver}
+Summary(pl.UTF-8):	Wtyczka capi dla pppd w wersji %{ppp_ver}
 Group:		Applications/Communications
 %{requires_eq_to ppp ppp-plugin-devel}
 
@@ -77,7 +77,7 @@ Wtyczka capi dla pppd w wersji %{ppp_ver}.
 
 %package -n capi
 Summary:	Program which can initialize CAPI hardware
-Summary(pl.UTF-8):   Program, który inicjalizuje sprzęt ISDN zgodny z CAPI
+Summary(pl.UTF-8):	Program, który inicjalizuje sprzęt ISDN zgodny z CAPI
 Group:		Applications/Communications
 
 %description -n capi
@@ -100,7 +100,7 @@ Trzeba zaopatrzyć się w odpowiedni moduł jądra i zmodyfikować plik
 
 %package -n capi-libs
 Summary:	CAPI 2.0 - shared library
-Summary(pl.UTF-8):   Biblioteka dzielona CAPI 2.0
+Summary(pl.UTF-8):	Biblioteka dzielona CAPI 2.0
 Group:		Libraries
 
 %description -n capi-libs
@@ -120,7 +120,7 @@ w wersji 2.0.
 
 %package -n capi-libs-static
 Summary:	Static libraries for CAPI 2.0
-Summary(pl.UTF-8):   Statyczne biblioteki dla CAPI 2.0
+Summary(pl.UTF-8):	Statyczne biblioteki dla CAPI 2.0
 Group:		Development/Libraries
 Requires:	capi-devel = %{epoch}:%{version}-%{release}
 
@@ -141,7 +141,7 @@ w wersji 2.0.
 
 %package -n capi-devel
 Summary:	CAPI 2.0 - development stuff
-Summary(pl.UTF-8):   CAPI 2.0 - zasoby programistyczne
+Summary(pl.UTF-8):	CAPI 2.0 - zasoby programistyczne
 Group:		Development/Libraries
 Requires:	capi-libs = %{epoch}:%{version}-%{release}
 
@@ -162,7 +162,7 @@ wykorzystujących standard CAPI 2.0
 
 %package -n capi-tools
 Summary:	CAPI 2.0 - useful programs
-Summary(pl.UTF-8):   CAPI 2.0 - programy użytkowe
+Summary(pl.UTF-8):	CAPI 2.0 - programy użytkowe
 Group:		Applications/Communications
 
 %description -n capi-tools
