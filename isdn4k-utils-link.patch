@@ -1,0 +1,11 @@
+--- isdn4k-utils/capi20/Makefile.am.orig	2013-01-27 08:06:25.000000000 +0100
++++ isdn4k-utils/capi20/Makefile.am	2013-01-27 11:23:08.603741004 +0100
+@@ -10,7 +10,7 @@
+ lib_LIBRARIES   = libcapi20dyn.a
+ 
+ libcapi20_la_SOURCES = capi20.c capifunc.c convert.c capi_defs.h compat/byteswap.h
+-libcapi20_la_LDFLAGS = -version-info ${LIBCAPI_VERSION}:${LIBCAPI_VERSION_RELEASE}:${LIBCAPI_VERSION_AGE} -lc -rdynamic
++libcapi20_la_LDFLAGS = -version-info ${LIBCAPI_VERSION}:${LIBCAPI_VERSION_RELEASE}:${LIBCAPI_VERSION_AGE} -lpthread -rdynamic
+ libcapi20_la_CFLAGS = -fno-strict-aliasing -DLIBDIR=\"$(libdir)/capi\"
+ 
+ modulesdir = $(libdir)/capi

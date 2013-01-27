@@ -49,33 +49,33 @@
  
  INCLUDE     = -I./isdnlog -I./connect -I./tools -I$(PREFIXDIR) -I$(LIBISDNDIR)
  
---- isdn4k-utils/imontty/Makefile.orig	2013-01-26 20:36:48.114849455 +0100
-+++ isdn4k-utils/imontty/Makefile	2013-01-26 20:51:40.354830857 +0100
+--- isdn4k-utils/imontty/Makefile.orig	2013-01-27 10:51:09.940447663 +0100
++++ isdn4k-utils/imontty/Makefile	2013-01-27 11:02:26.557100226 +0100
 @@ -32,7 +32,7 @@
  all: $(PROGS)
  
  imontty: imontty.c imontty.h
--	cc $(CCFLAGS) -o imontty imontty.c
-+	$(CC) $(CCFLAGS) -o imontty imontty.c
+-	cc $(CFLAGS) $(CCFLAGS) -o imontty imontty.c
++	$(CC) $(CFLAGS) $(CCFLAGS) -o imontty imontty.c
  
  rootperm:
  	@echo 'main(int argc,char**argv){unlink(argv[0]);return(getuid()==0);}'>g
---- isdn4k-utils/isdnctrl/Makefile.in.orig	2013-01-26 20:54:07.324827793 +0100
-+++ isdn4k-utils/isdnctrl/Makefile.in	2013-01-26 21:01:51.744818113 +0100
+--- isdn4k-utils/isdnctrl/Makefile.in.orig	2013-01-27 10:51:10.273780990 +0100
++++ isdn4k-utils/isdnctrl/Makefile.in	2013-01-27 11:03:21.640432415 +0100
 @@ -5,7 +5,7 @@
  #
  #
- SHELL			  = /bin/sh
+ SHELL			= /bin/sh
 -CFLAGS			= -Wall -O2
 +CFLAGS			= @CFLAGS@ -Wall -DVERSION=\"@I4LVERSION@\"
  INCLUDES		= -I.
- LDFLAGS			= @LIBS@ 
+ LDFLAGS			= @LIBS@
  PROGRAM			= isdnctrl
 @@ -17,7 +17,7 @@
  INSTALL			= @INSTALL@
  INSTALL_PROGRAM		= $(INSTALL) -m 0750
  INSTALL_MAN		= $(INSTALL) -m 0644
--CC				= @CC@ -DVERSION=\"@I4LVERSION@\"
+-CC			= @CC@ -DVERSION=\"@I4LVERSION@\"
 +CC			= @CC@
  prefix			= @prefix@
  exec_prefix		= @exec_prefix@
@@ -102,15 +102,15 @@
  	rm -rf X11
  
  xmonisdn.man: xmonisdn.man.in Makefile
---- isdn4k-utils/isdnlog/Makefile.in.orig	2013-01-26 21:02:14.008150983 +0100
-+++ isdn4k-utils/isdnlog/Makefile.in	2013-01-26 22:13:57.434727954 +0100
-@@ -1714,8 +1714,7 @@
+--- isdn4k-utils/isdnlog/Makefile.in.orig	2013-01-27 10:51:10.277114325 +0100
++++ isdn4k-utils/isdnlog/Makefile.in	2013-01-27 11:04:09.040431424 +0100
+@@ -1848,8 +1848,7 @@
  PCFLAGS = mode=oracle ireclen=160 lines=yes
  
  %.o: %.c
 -	@echo Compiling $<
--	@$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -c -o $@ $<
-+	$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -c -o $@ $<
+-	@$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -fno-strict-aliasing -c -o $@ $<
++	$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -fno-strict-aliasing -c -o $@ $<
  
  %.1: %.man
  	MANDATE=`grep CHECKIN $< | $(AWK) '{print $$4}'`; \
@@ -136,17 +136,6 @@
  INCLUDES		= -I.
  DEFS			=
  LDFLAGS			= -L../lib @LIBS@
---- isdn4k-utils/pcbit/Makefile.in.orig	2013-01-26 22:14:19.811394154 +0100
-+++ isdn4k-utils/pcbit/Makefile.in	2013-01-26 22:33:13.934703847 +0100
-@@ -5,7 +5,7 @@
- #
- #
- SHELL			= /bin/sh
--CFLAGS			= -Wall -Wstrict-prototypes -O2 -g
-+CFLAGS			= @CFLAGS@ -Wall -Wstrict-prototypes
- INCLUDES		= -I. -DDEBUG 
- LDFLAGS			= -L../lib @LIBS@
- PROGRAM			= pcbitctl
 --- isdn4k-utils/hisax/Makefile.in.orig	2013-01-26 22:14:19.808060821 +0100
 +++ isdn4k-utils/hisax/Makefile.in	2013-01-26 22:33:42.911369911 +0100
 @@ -6,7 +6,7 @@
@@ -213,14 +202,14 @@
  
  all: ipppstats
  
---- isdn4k-utils/ipppd/Makefile.in.orig	2013-01-26 22:14:19.808060821 +0100
-+++ isdn4k-utils/ipppd/Makefile.in	2013-01-26 22:39:06.664696509 +0100
-@@ -70,7 +70,7 @@
+--- isdn4k-utils/ipppd/Makefile.in.orig	2013-01-27 10:51:10.400447654 +0100
++++ isdn4k-utils/ipppd/Makefile.in	2013-01-27 11:05:31.063763050 +0100
+@@ -73,7 +73,7 @@
  
  DEBUG_FLAGS   = @CONFIG_IPPPD_DEBUGFLAGS@
- COMPILE_FLAGS = 
--CFLAGS        = -O2 -fomit-frame-pointer -Wall
-+CFLAGS        = @CFLAGS@ -fomit-frame-pointer -Wall
+ COMPILE_FLAGS = @CFLAGS@
+-CFLAGS        = -O2 -fomit-frame-pointer -Wall -DREQ_SYSOPTIONS=0
++CFLAGS        = -fomit-frame-pointer -Wall -DREQ_SYSOPTIONS=0
  VER           = 2.2.0
  
  # it's a hack
@@ -246,15 +235,3 @@
  LDFLAGS = -L../capi20/.libs -L../capi20 $(all_libraries)
  LDADD = -lcapi20
  
---- isdn4k-utils/pppdcapiplugin/Rules.make.orig	2013-01-26 22:14:19.818060819 +0100
-+++ isdn4k-utils/pppdcapiplugin/Rules.make	2013-01-26 22:44:14.688023411 +0100
-@@ -13,7 +13,8 @@
- CC	= gcc
- INC     = -I$(TOPDIR) -I$(CAPIINC) 
- DEFS    = -DPPPVER=$(shell $(TOPDIR)/pversion $(PPPVERSION))
--CFLAGS	= -O2 
-+CCFLAGS = -O2
-+CFLAGS	= $(CCFLAGS)
- LDFLAGS	= -shared -L$(CAPILIB)
- 
- ALL = capiplugin.so userpass.so

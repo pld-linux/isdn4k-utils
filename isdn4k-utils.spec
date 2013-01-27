@@ -2,33 +2,31 @@ Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra
 Summary(pt_BR.UTF-8):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
-Version:	040111
-Release:	4
-Epoch:		2
+Version:	3.25
+Release:	1
+Epoch:		3
 License:	GPL v2
 Group:		Applications/Communications
-Source0:	http://rk.pop.e-wro.pl/%{name}-%{version}.tar.gz
-# Source0-md5:	6955ecdcd7df5bc8fa2844fa9c45bbf6
+# git clone git://git.misdn.eu/isdn4k-utils.git
+# git checkout v3.25
+Source0:	%{name}-%{version}.tar.xz
+# Source0-md5:	cb297fd819a146f4c7afc6bc9706ac51
 Source1:	%{name}.config
 Patch0:		%{name}-make.patch
-Patch1:		%{name}-ppc.patch
-Patch2:		%{name}-pppdcapiplugin.patch
-Patch3:		%{name}-isdnlog_dont_touch_etc_services.patch
-Patch4:		%{name}-libdir.patch
-Patch5:		%{name}-am.patch
-Patch6:		%{name}-libc.patch
-Patch7:		%{name}-gcc.patch
-Patch8:		%{name}-tcl.patch
-Patch9:		%{name}-sh.patch
-Patch10:	%{name}-opt.patch
+Patch1:		%{name}-pppdcapiplugin.patch
+Patch2:		%{name}-am.patch
+Patch3:		%{name}-sh.patch
+Patch4:		%{name}-opt.patch
+Patch5:		%{name}-link.patch
 URL:		http://www.isdn4linux.de/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	ncurses-ext-devel
 BuildRequires:	ppp-plugin-devel
 BuildRequires:	rpmbuild(macros) >= 1.145
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	tcl-devel >= 8.4
 BuildRequires:	xorg-cf-files >= 1.0.4-2
 BuildRequires:	xorg-lib-libXaw-devel
@@ -36,9 +34,9 @@ BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
 BuildRequires:	xorg-lib-libXt-devel >= 1.0.0
 BuildRequires:	xorg-util-imake
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sbindir	/sbin
 %define		_appdefsdir	/usr/share/X11/app-defaults
 %define		ppp_ver		%(awk -F'"' '/VERSION/ { print $2 }' /usr/include/pppd/patchlevel.h 2>/dev/null || echo ERROR)
 
@@ -198,20 +196,12 @@ Wtyczka CAPI dla pppd w wersji %{ppp_ver}.
 
 %prep
 %setup -q -n %{name}
-find . -type d -name CVS | xargs %{__rm} -r
 %patch0 -p1
-%ifarch ppc
 %patch1 -p1
-%endif
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
 
 # don't symlink app-defaults dir to /etc/X11
 %{__sed} -i -e 's,@xmkmf,imake -I%{_libdir}/X11/config -DUseInstalled -DUseSeparateConfDir=NO,' xisdnload/Makefile.in
@@ -223,17 +213,14 @@ cd capi20
 %{__autoconf}
 %{__automake}
 cd ..
-for i in capifax capiinfo capiinit rcapid; do
+for i in capifax capiinfo capiinit rcapid vbox; do
 	cd $i
 	%{__aclocal}
 	%{__autoconf}
+	[ "$i" == "rcapid" ] || %{__autoheader}
 	%{__automake}
 	cd ..
 done
-cd vbox
-%{__aclocal}
-%{__autoconf}
-cd ..
 
 cp %{SOURCE1} .config
 %{__make} subconfig \
@@ -252,7 +239,7 @@ cp %{SOURCE1} .config
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},/var/lock/isdn}
+install -d $RPM_BUILD_ROOT{/var/lock/isdn,/sbin}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -265,6 +252,10 @@ test ! -d isdn-doc || %{__rm} -r isdn-doc
 install -d isdn-doc/faq
 %{__mv} $RPM_BUILD_ROOT%{_docdir}/isdn4linux/faq/*.{txt,html} isdn-doc/faq
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/isdn4linux/faq/*.sgml
+# vbox.txt packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/vbox
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/capi/lib_capi_mod_*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -274,16 +265,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README FAQ NEWS LEGAL.ipppcomp ipppcomp/README.LZS Mini-FAQ/isdn-faq.txt isdnlog/{tools/dest/README.*,isdnrep/CHANGES.isdnrep} FAQ/{_howto,_example} isdn-doc/faq
+%doc README FAQ NEWS LEGAL.ipppcomp ipppcomp/README.LZS Mini-FAQ/isdn-faq.txt isdnlog/{tools/dest/README.*,isdnrep/CHANGES.isdnrep} FAQ/{_howto,_example} isdn-doc/faq vbox/doc/de/vbox.txt
 %dir %{_sysconfdir}/isdn
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/callerid.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/isdn.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/isdnlog.isdnctrl0.options
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/isdnlog.users
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/rate.conf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/vboxd.conf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/vboxgetty.conf
 %attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/stop
+%dir %{_sysconfdir}/vbox
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/vbox/vboxd.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/vbox/vboxgetty.conf
 %attr(755,root,root) %{_bindir}/autovbox
 %attr(755,root,root) %{_bindir}/rmdtovbox
 %attr(755,root,root) %{_bindir}/isdnbill
@@ -294,29 +286,30 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/vboxbeep
 %attr(755,root,root) %{_bindir}/vboxcnvt
 %attr(755,root,root) %{_bindir}/vboxctrl
-%attr(755,root,root) %{_bindir}/vboxmail
 %attr(755,root,root) %{_bindir}/vboxmode
 %attr(755,root,root) %{_bindir}/vboxplay
 %attr(755,root,root) %{_bindir}/vboxtoau
-%attr(755,root,root) %{_sbindir}/hisaxctrl
-%attr(755,root,root) %{_sbindir}/icnctrl
-%attr(755,root,root) %{_sbindir}/imon
-%attr(755,root,root) %{_sbindir}/imontty
-%attr(755,root,root) %{_sbindir}/ipppd
-%attr(755,root,root) %{_sbindir}/ipppstats
-%attr(755,root,root) %{_sbindir}/iprofd
-%attr(755,root,root) %{_sbindir}/isdnctrl
-%attr(755,root,root) %{_sbindir}/isdnlog
-%attr(755,root,root) %{_sbindir}/loopctrl
-%attr(755,root,root) %{_sbindir}/mkzonedb
-%attr(755,root,root) %{_sbindir}/pcbitctl
+%attr(755,root,root) /sbin/actctrl
+%attr(755,root,root) /sbin/hisaxctrl
+%attr(755,root,root) /sbin/icnctrl
+%attr(755,root,root) /sbin/imon
+%attr(755,root,root) /sbin/imontty
+%attr(755,root,root) /sbin/ipppd
+%attr(755,root,root) /sbin/ipppstats
+%attr(755,root,root) /sbin/iprofd
+%attr(755,root,root) /sbin/isdnctrl
+%attr(755,root,root) /sbin/isdnlog
+%attr(755,root,root) /sbin/loopctrl
+%attr(755,root,root) /sbin/mkzonedb
 %attr(755,root,root) %{_sbindir}/vboxd
 %attr(755,root,root) %{_sbindir}/vboxgetty
+%attr(755,root,root) %{_sbindir}/vboxmail
 %attr(755,root,root) %{_sbindir}/vboxputty
 %{_prefix}/lib/isdn
 %dir /var/lock/isdn
 %{_mandir}/man1/autovbox.1*
 %{_mandir}/man1/rmdtovbox.1*
+%{_mandir}/man1/isdnbill.1*
 %{_mandir}/man1/isdnconf.1*
 %{_mandir}/man1/isdnrate.1*
 %{_mandir}/man1/isdnrep.1*
@@ -336,6 +329,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/isdnformat.5*
 %{_mandir}/man5/isdnlog.5*
 %{_mandir}/man5/isdnlog.users.5*
+%{_mandir}/man5/rate.conf.5*
 %{_mandir}/man5/rate-files.5*
 %{_mandir}/man5/vbox.conf.5*
 %{_mandir}/man5/vbox_file.5*
@@ -345,6 +339,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/vboxtcl.5*
 %{_mandir}/man7/isdn_cause.7*
 %{_mandir}/man8/.isdnctrl_conf.8*
+%{_mandir}/man8/actctrl.8*
 %{_mandir}/man8/hisaxctrl.8*
 %{_mandir}/man8/icnctrl.8*
 %{_mandir}/man8/imon.8*
@@ -356,7 +351,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/isdnlog.8*
 %{_mandir}/man8/loopctrl.8*
 %{_mandir}/man8/mkzonedb.8*
-%{_mandir}/man8/pcbitctl.8*
 %{_mandir}/man8/vboxd.8*
 %{_mandir}/man8/vboxgetty.8*
 %{_mandir}/man8/vboxmail.8*
@@ -377,12 +371,17 @@ rm -rf $RPM_BUILD_ROOT
 %files -n capi
 %defattr(644,root,root,755)
 %doc capiinit/capi.conf
-%attr(755,root,root) %{_sbindir}/capiinit
+%attr(755,root,root) /sbin/capiinit
+%{_mandir}/man8/capiinit.8*
 
 %files -n capi-libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcapi20.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcapi20.so.2
+%attr(755,root,root) %ghost %{_libdir}/libcapi20.so.3
+%dir %{_libdir}/capi
+%attr(755,root,root) %{_libdir}/capi/lib_capi_mod_fritzbox.so*
+%attr(755,root,root) %{_libdir}/capi/lib_capi_mod_rcapi.so*
+%attr(755,root,root) %{_libdir}/capi/lib_capi_mod_std.so*
 
 %files -n capi-libs-static
 %defattr(644,root,root,755)
@@ -394,19 +393,25 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libcapi20.so
 %{_libdir}/libcapi20.la
 %{_includedir}/capi20.h
+%{_includedir}/capi_debug.h
+%{_includedir}/capi_mod.h
 %{_includedir}/capicmd.h
 %{_includedir}/capiutils.h
+%{_pkgconfigdir}/capi20.pc
 
 %files -n capi-tools
 %defattr(644,root,root,755)
 %doc rcapid/README
-%attr(755,root,root) %{_sbindir}/avmcapictrl
-%attr(755,root,root) %{_sbindir}/rcapid
+%attr(755,root,root) /sbin/avmcapictrl
+%attr(755,root,root) /sbin/rcapid
 %attr(755,root,root) %{_bindir}/capiinfo
 %attr(755,root,root) %{_bindir}/capifax
 %attr(755,root,root) %{_bindir}/capifaxrcvd
+%{_mandir}/man1/capifax.1*
 %{_mandir}/man8/avmcapictrl.8*
 %{_mandir}/man8/capiinfo.8*
+%{_mandir}/man8/capifaxrcvd.8*
+%{_mandir}/man8/rcapid.8*
 
 %files -n ppp-plugin-capi
 %defattr(644,root,root,755)

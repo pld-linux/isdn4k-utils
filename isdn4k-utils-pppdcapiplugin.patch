@@ -1,7 +1,6 @@
-diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin/Makefile
---- isdn4k-utils.orig/pppdcapiplugin/Makefile	Wed Jun 11 23:06:50 2003
-+++ isdn4k-utils/pppdcapiplugin/Makefile	Wed Jun 11 23:08:26 2003
-@@ -8,86 +8,15 @@
+--- isdn4k-utils/pppdcapiplugin/Makefile.orig	2013-01-27 09:27:33.333885560 +0100
++++ isdn4k-utils/pppdcapiplugin/Makefile	2013-01-27 10:09:25.173833208 +0100
+@@ -8,13 +8,15 @@
  #  as published by the Free Software Foundation; either version
  #  2 of the License, or (at your option) any later version.
  
@@ -9,47 +8,46 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin
 -export CAPIINC=$(TOPDIR)/../capi20
 -export CAPILIB=$(TOPDIR)/../capi20
 -export INSTALL=$(TOPDIR)/install-sh -c
--export INSTALLDATA=$(TOPDIR)/install-sh -c -o root -m 600
+-export INSTALLDATA=$(TOPDIR)/install-sh -c -m 600
 -export MKDIR=$(TOPDIR)/mkinstalldirs
+-export PPPINC=/usr/include/pppd
 +TOPDIR=$(shell pwd)
 +CAPIINC=$(TOPDIR)/../capi20
 +CAPILIB=$(TOPDIR)/../capi20
 +INSTALL=$(TOPDIR)/install-sh -c
-+INSTALLDATA=$(TOPDIR)/install-sh -c -o root -m 600
++INSTALLDATA=$(TOPDIR)/install-sh -c -m 600
 +MKDIR=$(TOPDIR)/mkinstalldirs
++PPPINC=/usr/include/pppd
 +MANDIR=/usr/share/man
-+
-+#PPPVERSION=$(shell /usr/sbin/pppd --version 2>&1 | sed -e "s/pppd\ version\ //")
-+PLUGINDIR=$(DESTDIR)/usr/lib/pppd/$(PPPVERSION)
++PLUGINDIR=$(DESTDIR)$(CONFIG_LIBDIR)/pppd/$(PPPVERSION)
+ 
+ ifeq ($(PPPVERSION),)
+ PPPVERSION_XX=$(shell grep VERSION $(PPPINC)/patchlevel.h)
+@@ -28,70 +30,9 @@
+ 
+ ALL = capiplugin.so userpass.so
+ 
+-#all: pversion
+-#	@for i in $(PPPVERSIONS) ; do \
+-#	    echo $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
+-#	    $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
+-#	done
+-
+-all: pversion ppp-$(PPPVERSION)
+-	echo $(MAKE) -C ppp-$(PPPVERSION) PPPVERSION=$(PPPVERSION)
+-	$(MAKE) -C ppp-$(PPPVERSION) PPPVERSION=$(PPPVERSION)
+-
+-ppp-$(PPPVERSION):
+-	$(MKDIR) ppp-$(PPPVERSION)
+-	echo created ppp-$(PPPVERSION)
+-	cp Makefile.template ppp-$(PPPVERSION)/Makefile
 +include $(TOPDIR)/Rules.make
  
--PPPSRCDIRS=/src/isdn/pppd
--
--ifeq ($(PPPVERSIONS),)
--PPPVERSIONS = 2.3.11 2.4.0 2.4.1 2.4.1b1 2.4.1b2 2.4.2b3
--endif
--
--PEERDIR=${DESTDIR}/etc/ppp/peers/isdn
--DRDSLDIR=${DESTDIR}/etc/drdsl
--PEERS= arcor otelo talkline avm avm-ml leased
--DRDSLFILES = adsl.conf
--
--ALL = capiplugin.so userpass.so
--
--all: pversion
--	@for i in $(PPPVERSIONS) ; do \
--	    echo $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
--	    $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
--	done
--
--distclean: clean
--
+ distclean: clean
+ 
 -clean:
--	@for i in $(PPPVERSIONS) ; do \
--	    echo $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
--	    $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
--	done
--	$(RM) comperr pversion
+-	echo $(MAKE) -C ppp-$(PPPVERSION) PPPVERSION=$(PPPVERSION) $@ ;
+-	$(MAKE) -C ppp-$(PPPVERSION) PPPVERSION=$(PPPVERSION) $@ ;
 -
 -install-peers:
 -	$(MKDIR) $(PEERDIR)
@@ -77,11 +75,9 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin
 -		fi ; \
 -	done
 -
--install: pversion
--	@for i in $(PPPVERSIONS) ; do \
--	    echo $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
--	    $(MAKE) -C ppp-$$i PPPVERSION=$$i $@ ; \
--	done
+-install:
+-	echo $(MAKE) -C ppp-$(PPPVERSION) PPPVERSION=$(PPPVERSION) $@ ;
+-	$(MAKE) -C ppp-$(PPPVERSION) PPPVERSION=$(PPPVERSION) $@ ;
 -	$(MAKE) install-peers
 -	$(MAKE) install-drdsl
 -	$(MAKE) install-man
@@ -97,54 +93,35 @@ diff -Naur isdn4k-utils.orig/pppdcapiplugin/Makefile isdn4k-utils/pppdcapiplugin
 -	    done \
 -	done
 -
--config:
--	@echo nothing to configure
-diff -Naur isdn4k-utils.orig/pppdcapiplugin/Rules.make isdn4k-utils/pppdcapiplugin/Rules.make
---- isdn4k-utils.orig/pppdcapiplugin/Rules.make	Wed Jun 11 23:06:50 2003
-+++ isdn4k-utils/pppdcapiplugin/Rules.make	Wed Jun 11 23:07:21 2003
-@@ -11,20 +11,37 @@
- vpath %.c $(TOPDIR)
- 
+ config:
+ 	@echo nothing to configure
+--- isdn4k-utils/pppdcapiplugin/Rules.make.orig	2013-01-27 08:06:26.000000000 +0100
++++ isdn4k-utils/pppdcapiplugin/Rules.make	2013-01-27 10:06:32.657170129 +0100
+@@ -13,12 +13,21 @@
  CC	= gcc
--INC     = -I$(TOPDIR) -I$(CAPIINC) -Ipppd
-+INC     = -I$(TOPDIR) -I$(CAPIINC) 
+ INC     = -I$(TOPDIR) -I$(CAPIINC) -I$(PPPINC)
  DEFS    = -DPPPVER=$(shell $(TOPDIR)/pversion $(PPPVERSION))
--CFLAGS	= -O2 -Wall -fPIC $(DEFS) $(INC) -L$(CAPILIB)
-+CFLAGS	= -O2 
+-MYCFLAGS= -O2 -Wall -fPIC $(DEFS) $(INC) -L$(CAPILIB)
++CCFLAGS = -O2
++CFLAGS  = $(CCFLAGS)
++MYCFLAGS= -Wall -fPIC $(DEFS) $(INC) -L$(CAPILIB)
  LDFLAGS	= -shared -L$(CAPILIB)
  
  ALL = capiplugin.so userpass.so
  
 -all:	$(ALL)
-+all: def $(ALL)
- 
++all:	def $(ALL)
++
 +pversion: pversion.c
 +	$(CC) $(CFLAGS) pversion.c -o pversion
 +
 +def: pversion
 +	echo \#define PPPVER $(shell $(TOPDIR)/pversion $(PPPVERSION)) >> p.h
 +	echo \#endif >> p.h
-+	
-+
-+capiplugin.o: capiplugin.c
-+	$(CC) $(CFLAGS) -Wall -fPIC $(DEFS) $(INC) -L$(CAPILIB) -o capiplugin.o -c capiplugin.c
-+
-+capiconn.o: capiconn.c
-+	$(CC) $(CFLAGS) -Wall -fPIC $(DEFS) $(INC) -L$(CAPILIB) -o capiconn.o -c capiconn.c
-+       
+ 
  capiplugin.so: capiplugin.o capiconn.o
  	$(CC) -o $@ $(LDFLAGS) capiplugin.o capiconn.o -lcapi20dyn
- 
-+userpass.o: userpass.c
-+	$(CC) $(CFLAGS) -Wall -fPIC $(DEFS) $(INC) -L$(CAPILIB) -o userpass.o -c userpass.c
-+
- userpass.so: userpass.o
--	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) -nostdlib userpass.o
-+	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) -Wall -fPIC $(DEFS) $(INC) -L$(CAPILIB) -nostdlib userpass.o
- 
- distclean: clean
- 
-@@ -33,10 +50,12 @@
+@@ -36,10 +45,12 @@
  
  install: $(ALL)
  	$(MKDIR) $(PLUGINDIR)
