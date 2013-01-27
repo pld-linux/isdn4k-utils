@@ -1,0 +1,260 @@
+--- isdn4k-utils/isdnlog/tools/cdb/Makefile.in.orig	2000-08-15 17:16:23.000000000 +0200
++++ isdn4k-utils/isdnlog/tools/cdb/Makefile.in	2013-01-26 19:47:47.128244088 +0100
+@@ -20,7 +20,9 @@
+ BINDIR:=$(DESTDIR)@prefix@/bin
+ INCDIR:=$(DESTDIR)@prefix@/include
+ 
+-CFLAGS:=-Wall -O2
++CC=@CC@
++CFLAGS=@CFLAGS@ -Wall
++CPPFLAGS=@CPPFLAGS@ -Wall
+ 
+ all: depend $(FILES)
+ 
+--- isdn4k-utils/imon/Makefile.in.orig	2013-01-26 20:03:13.501558111 +0100
++++ isdn4k-utils/imon/Makefile.in	2013-01-26 20:10:12.841549371 +0100
+@@ -7,7 +7,8 @@
+ #
+ #
+ SHELL			= /bin/sh
+-CFLAGS			= -Wall -O2
++CFLAGS			= @CFLAGS@ -Wall
++CPPFLAGS		= @CPPFLAGS@
+ INCLUDES		= -I.
+ LDFLAGS			= -L../lib @LIBS@
+ PROGRAM			= imon
+@@ -28,7 +29,7 @@
+ .SUFFIXES: .c .o
+ 
+ %.o: %.c Makefile
+-	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
++	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -c -o $@ $<
+ 
+ all: $(PROGRAM)
+ 
+--- isdn4k-utils/isdnlog/Makefile.in.orig	2013-01-26 20:03:13.518224778 +0100
++++ isdn4k-utils/isdnlog/Makefile.in	2013-01-26 20:14:31.764877308 +0100
+@@ -1633,12 +1633,8 @@
+ 
+ # export CFLAGS  = -Wall -pipe -O6 -fomit-frame-pointer -fforce-mem -fforce-addr -funroll-loops -fstrength-reduce
+ 
+-export CFLAGS  = -Wall -pipe
+-ifndef _CC
+-export _CC  = gcc
+-endif
+-
+-CC          = $(_CC)
++export CFLAGS  = @CFLAGS@ -Wall -pipe
++CC          = @CC@
+ 
+ INCLUDE     = -I./isdnlog -I./connect -I./tools -I$(PREFIXDIR) -I$(LIBISDNDIR)
+ 
+--- isdn4k-utils/imontty/Makefile.orig	2013-01-26 20:36:48.114849455 +0100
++++ isdn4k-utils/imontty/Makefile	2013-01-26 20:51:40.354830857 +0100
+@@ -32,7 +32,7 @@
+ all: $(PROGS)
+ 
+ imontty: imontty.c imontty.h
+-	cc $(CCFLAGS) -o imontty imontty.c
++	$(CC) $(CCFLAGS) -o imontty imontty.c
+ 
+ rootperm:
+ 	@echo 'main(int argc,char**argv){unlink(argv[0]);return(getuid()==0);}'>g
+--- isdn4k-utils/isdnctrl/Makefile.in.orig	2013-01-26 20:54:07.324827793 +0100
++++ isdn4k-utils/isdnctrl/Makefile.in	2013-01-26 21:01:51.744818113 +0100
+@@ -5,7 +5,7 @@
+ #
+ #
+ SHELL			  = /bin/sh
+-CFLAGS			= -Wall -O2
++CFLAGS			= @CFLAGS@ -Wall -DVERSION=\"@I4LVERSION@\"
+ INCLUDES		= -I.
+ LDFLAGS			= @LIBS@ 
+ PROGRAM			= isdnctrl
+@@ -17,7 +17,7 @@
+ INSTALL			= @INSTALL@
+ INSTALL_PROGRAM		= $(INSTALL) -m 0750
+ INSTALL_MAN		= $(INSTALL) -m 0644
+-CC				= @CC@ -DVERSION=\"@I4LVERSION@\"
++CC			= @CC@
+ prefix			= @prefix@
+ exec_prefix		= @exec_prefix@
+ 
+--- isdn4k-utils/xisdnload/Makefile.in.orig	2013-01-26 21:02:14.011484316 +0100
++++ isdn4k-utils/xisdnload/Makefile.in	2013-01-26 22:12:24.118063231 +0100
+@@ -17,7 +17,7 @@
+ all: xisdnload
+ 
+ xisdnload:
+-	CFLAGS= ; MAKEFLAGS= ; $(MAKE) -f Makefile EXTRA_DEFINES="$(EDEF)"
++	CFLAGS= ; MAKEFLAGS= ; $(MAKE) -f Makefile EXTRA_DEFINES="$(EDEF)" CDEBUGFLAGS="$(CCFLAGS)" CC="$(CC)"
+ 
+ config:
+ 	@cp Makefile.in GNUmakefile
+--- isdn4k-utils/xmonisdn/Makefile.in.orig	2002-07-19 23:23:55.000000000 +0200
++++ isdn4k-utils/xmonisdn/Makefile.in	2013-01-26 22:13:13.154728877 +0100
+@@ -48,7 +48,7 @@
+ 	mkdir -p X11/bitmaps
+ 	cp netinactive netwaiting netactive \
+ 		netactiveout netstart netstop X11/bitmaps
+-	CFLAGS= ; MAKEFLAGS= ; $(MAKE) -f Makefile EXTRA_DEFINES="$(I4LU_DEFINES)"
++	CFLAGS= ; MAKEFLAGS= ; $(MAKE) -f Makefile EXTRA_DEFINES="$(I4LU_DEFINES)" CDEBUGFLAGS="$(CCFLAGS)" CC="$(CC)"
+ 	rm -rf X11
+ 
+ xmonisdn.man: xmonisdn.man.in Makefile
+--- isdn4k-utils/isdnlog/Makefile.in.orig	2013-01-26 21:02:14.008150983 +0100
++++ isdn4k-utils/isdnlog/Makefile.in	2013-01-26 22:13:57.434727954 +0100
+@@ -1714,8 +1714,7 @@
+ PCFLAGS = mode=oracle ireclen=160 lines=yes
+ 
+ %.o: %.c
+-	@echo Compiling $<
+-	@$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -c -o $@ $<
++	$(CC) $(CFLAGS) $(DEFS) $(INCLUDE) -c -o $@ $<
+ 
+ %.1: %.man
+ 	MANDATE=`grep CHECKIN $< | $(AWK) '{print $$4}'`; \
+--- isdn4k-utils/iprofd/Makefile.in.orig	2013-01-26 22:14:19.808060821 +0100
++++ isdn4k-utils/iprofd/Makefile.in	2013-01-26 22:32:02.101372014 +0100
+@@ -5,7 +5,7 @@
+ #
+ #
+ SHELL			= /bin/sh
+-CFLAGS			= -Wall -O2
++CFLAGS			= @CFLAGS@ -Wall
+ INCLUDES		= -I.
+ LDFLAGS			= -L../lib @LIBS@
+ PROGRAM			= iprofd
+--- isdn4k-utils/icn/Makefile.in.orig	2013-01-26 22:14:19.808060821 +0100
++++ isdn4k-utils/icn/Makefile.in	2013-01-26 22:32:43.214704487 +0100
+@@ -5,7 +5,7 @@
+ #
+ #
+ SHELL			= /bin/sh
+-CFLAGS			= -Wall -O2
++CFLAGS			= @CFLAGS@ -Wall
+ INCLUDES		= -I.
+ DEFS			=
+ LDFLAGS			= -L../lib @LIBS@
+--- isdn4k-utils/pcbit/Makefile.in.orig	2013-01-26 22:14:19.811394154 +0100
++++ isdn4k-utils/pcbit/Makefile.in	2013-01-26 22:33:13.934703847 +0100
+@@ -5,7 +5,7 @@
+ #
+ #
+ SHELL			= /bin/sh
+-CFLAGS			= -Wall -Wstrict-prototypes -O2 -g
++CFLAGS			= @CFLAGS@ -Wall -Wstrict-prototypes
+ INCLUDES		= -I. -DDEBUG 
+ LDFLAGS			= -L../lib @LIBS@
+ PROGRAM			= pcbitctl
+--- isdn4k-utils/hisax/Makefile.in.orig	2013-01-26 22:14:19.808060821 +0100
++++ isdn4k-utils/hisax/Makefile.in	2013-01-26 22:33:42.911369911 +0100
+@@ -6,7 +6,7 @@
+ #
+ #
+ SHELL			= /bin/sh
+-CFLAGS			= -Wall -O2 -I.
++CFLAGS			= @CFLAGS@ -Wall -I.
+ LDFLAGS			= -L../lib @LIBS@
+ PROGRAMS		=
+ MODULES			= hisaxctrl.o
+--- isdn4k-utils/capiinfo/Makefile.am.orig	2000-10-20 19:14:20.000000000 +0200
++++ isdn4k-utils/capiinfo/Makefile.am	2013-01-26 22:34:53.928035099 +0100
+@@ -8,7 +8,7 @@
+ 			  stamp-h.in comperr
+ 
+ INCLUDES = -I../capi20 $(all_includes)
+-CFLAGS = -Wall -O2
++AM_CFLAGS = -Wall
+ LDFLAGS = -L../capi20/.libs -L../capi20 $(all_libraries)
+ LDADD = -lcapi20
+ 
+--- isdn4k-utils/avmb1/Makefile.in.orig	2013-01-26 22:14:19.804727488 +0100
++++ isdn4k-utils/avmb1/Makefile.in	2013-01-26 22:35:35.098034238 +0100
+@@ -5,7 +5,7 @@
+ #
+ #
+ SHELL			= /bin/sh
+-CFLAGS			= -Wall -O2
++CFLAGS			= @CFLAGS@ -Wall
+ LDFLAGS			= -L../lib @LIBS@
+ INCLUDES		= -I.
+ PROGRAMS		= avmcapictrl
+--- isdn4k-utils/capiinit/Makefile.am.orig	2000-03-17 17:19:43.000000000 +0100
++++ isdn4k-utils/capiinit/Makefile.am	2013-01-26 22:36:24.354699878 +0100
+@@ -8,7 +8,7 @@
+ 			  stamp-h.in comperr core
+ 
+ INCLUDES = $(all_includes)
+-CFLAGS = -Wall -O2 -D_GNU_SOURCE # -g
++AM_CFLAGS = -Wall -D_GNU_SOURCE
+ LDFLAGS = $(all_libraries)
+ LDADD = 
+ 
+--- isdn4k-utils/loop/Makefile.in.orig	2013-01-26 22:14:19.811394154 +0100
++++ isdn4k-utils/loop/Makefile.in	2013-01-26 22:36:58.991365825 +0100
+@@ -5,7 +5,7 @@
+ #
+ #
+ SHELL			= /bin/sh
+-CFLAGS			= -Wall -O2
++CFLAGS			= @CFLAGS@ -Wall
+ INCLUDES		= -I.
+ DEFS			=
+ LDFLAGS			= -L../lib @LIBS@
+--- isdn4k-utils/ipppstats/Makefile.in.orig	2013-01-26 22:14:19.808060821 +0100
++++ isdn4k-utils/ipppstats/Makefile.in	2013-01-26 22:37:57.108031281 +0100
+@@ -13,7 +13,7 @@
+ PPPSTATSRCS  = ipppstats.c
+ PPPSTATOBJS  = ipppstats.o
+ 
+-CFLAGS       = -fomit-frame-pointer -O2
++CFLAGS       = @CFLAGS@ -fomit-frame-pointer
+ 
+ all: ipppstats
+ 
+--- isdn4k-utils/ipppd/Makefile.in.orig	2013-01-26 22:14:19.808060821 +0100
++++ isdn4k-utils/ipppd/Makefile.in	2013-01-26 22:39:06.664696509 +0100
+@@ -70,7 +70,7 @@
+ 
+ DEBUG_FLAGS   = @CONFIG_IPPPD_DEBUGFLAGS@
+ COMPILE_FLAGS = 
+-CFLAGS        = -O2 -fomit-frame-pointer -Wall
++CFLAGS        = @CFLAGS@ -fomit-frame-pointer -Wall
+ VER           = 2.2.0
+ 
+ # it's a hack
+--- isdn4k-utils/rcapid/Makefile.am.orig	2002-07-19 23:23:54.000000000 +0200
++++ isdn4k-utils/rcapid/Makefile.am	2013-01-26 22:41:53.248026357 +0100
+@@ -8,7 +8,7 @@
+ 			  stamp-h.in comperr
+ 
+ INCLUDES = -I../capi20 $(all_includes)
+-CFLAGS = -Wall -O2
++AM_CFLAGS = -Wall
+ LDFLAGS = -L../capi20/.libs -L../capi20 $(all_libraries)
+ LDADD = -lcapi20
+ 
+--- isdn4k-utils/capifax/Makefile.am.orig	2000-03-03 16:54:12.000000000 +0100
++++ isdn4k-utils/capifax/Makefile.am	2013-01-26 22:42:29.944692261 +0100
+@@ -8,7 +8,7 @@
+ 			  stamp-h.in
+ 
+ INCLUDES = -I../capi20 $(all_includes)
+-CFLAGS = -Wall -O2
++AM_CFLAGS = -Wall
+ LDFLAGS = -L../capi20/.libs -L../capi20 $(all_libraries)
+ LDADD = -lcapi20
+ 
+--- isdn4k-utils/pppdcapiplugin/Rules.make.orig	2013-01-26 22:14:19.818060819 +0100
++++ isdn4k-utils/pppdcapiplugin/Rules.make	2013-01-26 22:44:14.688023411 +0100
+@@ -13,7 +13,8 @@
+ CC	= gcc
+ INC     = -I$(TOPDIR) -I$(CAPIINC) 
+ DEFS    = -DPPPVER=$(shell $(TOPDIR)/pversion $(PPPVERSION))
+-CFLAGS	= -O2 
++CCFLAGS = -O2
++CFLAGS	= $(CCFLAGS)
+ LDFLAGS	= -shared -L$(CAPILIB)
+ 
+ ALL = capiplugin.so userpass.so

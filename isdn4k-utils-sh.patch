@@ -1,0 +1,11 @@
+--- isdn4k-utils/FAQ/configure.in.orig	2000-04-03 02:45:19.000000000 +0200
++++ isdn4k-utils/FAQ/configure.in	2013-01-26 19:46:00.781579636 +0100
+@@ -3,7 +3,7 @@
+ 
+ dnl Set default installation directory
+ if test -r ../.config ; then
+-	source ../.config
++	. ../.config
+ 	TARGET_DIR=$CONFIG_FAQDIR
+ else
+ 	TARGET_DIR=./out

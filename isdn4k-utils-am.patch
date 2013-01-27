@@ -1,0 +1,38 @@
+--- isdn4k-utils/capifax/configure.in.orig	2002-07-04 12:25:21.000000000 +0200
++++ isdn4k-utils/capifax/configure.in	2013-01-25 22:11:27.429865260 +0100
+@@ -37,5 +37,5 @@
+ AC_SUBST(INSTALL)
+ AC_SUBST(CONFIG_SBINDIR)
+ AC_SUBST(CONFIG_MANDIR)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS(config.h)
+ AC_OUTPUT(Makefile)
+--- isdn4k-utils/capiinfo/configure.in.orig	2002-07-19 23:23:51.000000000 +0200
++++ isdn4k-utils/capiinfo/configure.in	2013-01-25 22:17:52.826523897 +0100
+@@ -42,5 +42,5 @@
+ AC_SUBST(I4LVERSION)
+ AC_SUBST(CONFIG_SBINDIR)
+ AC_SUBST(CONFIG_MANDIR)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS(config.h)
+ AC_OUTPUT(Makefile)
+--- isdn4k-utils/capiinit/configure.in.orig	2002-07-06 02:11:17.000000000 +0200
++++ isdn4k-utils/capiinit/configure.in	2013-01-25 22:19:13.129855554 +0100
+@@ -20,5 +20,5 @@
+ AC_SUBST(INSTALL)
+ AC_SUBST(CONFIG_SBINDIR)
+ AC_SUBST(CONFIG_MANDIR)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS(config.h)
+ AC_OUTPUT(Makefile)
+--- isdn4k-utils/vbox/configure.in.orig	1998-11-23 10:18:04.000000000 +0100
++++ isdn4k-utils/vbox/configure.in	2013-01-26 18:28:11.065010301 +0100
+@@ -3,7 +3,7 @@
+ dnl     to configure the system for the local environment.
+ 
+ AC_INIT(src/vboxgetty.h)
+-AM_CONFIG_HEADER(src/config.h)
++AC_CONFIG_HEADERS(src/config.h)
+ 
+ dnl #------------------------------------------------------------------------#
+ dnl # Version of the vbox package. Theres no need to change this ;-)         #

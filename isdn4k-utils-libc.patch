@@ -1,0 +1,21 @@
+--- isdn4k-utils/isdnlog/tools/cdb/cdbmake.c.orig	2002-01-31 20:59:44.000000000 +0100
++++ isdn4k-utils/isdnlog/tools/cdb/cdbmake.c	2013-01-25 22:27:23.709845326 +0100
+@@ -3,8 +3,6 @@
+ #include "freecdbmake.h"
+ #include <unistd.h>
+ 
+-extern char *malloc();
+-
+ void diesys(why) char *why; { perror(why); exit(111); }
+ 
+ void writeerror() { diesys("cdbmake: fatal: unable to write"); }
+--- isdn4k-utils/capi20/capi20.h.orig	2000-04-03 16:27:15.000000000 +0200
++++ isdn4k-utils/capi20/capi20.h	2013-01-26 10:34:21.538936192 +0100
+@@ -20,6 +20,7 @@
+ #ifndef __CAPI20_H__
+ #define __CAPI20_H__
+ 
++#include <stddef.h>
+ #include <sys/time.h>
+ 
+ #ifdef __cplusplus
