@@ -49,6 +49,18 @@ Narzędzia dla podsystemu ISDN jądra.
 %description -l pt_BR.UTF-8
 Utilitários para configuração do subsistema ISDN.
 
+%package vbox
+Summary:	VBOX - Voice Answering Machine for isdn4linux
+Summary(pl.UTF-8):	VBOX - automatyczna sekretarka dla szkieletu isdn4linux
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description vbox
+VBOX - Voice Answering Machine for isdn4linux.
+
+%description vbox -l pl.UTF-8
+VBOX - automatyczna sekretarka dla szkieletu isdn4linux.
+
 %package x11
 Summary:	Utilities for the kernel ISDN-subsystem - frontend for X11
 Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra - nakladki dla X11
@@ -265,7 +277,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README FAQ NEWS LEGAL.ipppcomp ipppcomp/README.LZS Mini-FAQ/isdn-faq.txt isdnlog/{tools/dest/README.*,isdnrep/CHANGES.isdnrep} FAQ/{_howto,_example} isdn-doc/faq vbox/doc/de/vbox.txt
+%doc README FAQ NEWS LEGAL.ipppcomp ipppcomp/README.LZS Mini-FAQ/isdn-faq.txt isdnlog/{tools/dest/README.*,isdnrep/CHANGES.isdnrep} FAQ/{_howto,_example} isdn-doc/faq
 %dir %{_sysconfdir}/isdn
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/callerid.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/isdn.conf
@@ -273,22 +285,10 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/isdnlog.users
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/rate.conf
 %attr(755,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/isdn/stop
-%dir %{_sysconfdir}/vbox
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/vbox/vboxd.conf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/vbox/vboxgetty.conf
-%attr(755,root,root) %{_bindir}/autovbox
-%attr(755,root,root) %{_bindir}/rmdtovbox
 %attr(755,root,root) %{_bindir}/isdnbill
 %attr(755,root,root) %{_bindir}/isdnconf
 %attr(755,root,root) %{_bindir}/isdnrate
 %attr(755,root,root) %{_bindir}/isdnrep
-%attr(755,root,root) %{_bindir}/vbox
-%attr(755,root,root) %{_bindir}/vboxbeep
-%attr(755,root,root) %{_bindir}/vboxcnvt
-%attr(755,root,root) %{_bindir}/vboxctrl
-%attr(755,root,root) %{_bindir}/vboxmode
-%attr(755,root,root) %{_bindir}/vboxplay
-%attr(755,root,root) %{_bindir}/vboxtoau
 %attr(755,root,root) /sbin/actctrl
 %attr(755,root,root) /sbin/hisaxctrl
 %attr(755,root,root) /sbin/icnctrl
@@ -301,25 +301,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/isdnlog
 %attr(755,root,root) /sbin/loopctrl
 %attr(755,root,root) /sbin/mkzonedb
-%attr(755,root,root) %{_sbindir}/vboxd
-%attr(755,root,root) %{_sbindir}/vboxgetty
-%attr(755,root,root) %{_sbindir}/vboxmail
-%attr(755,root,root) %{_sbindir}/vboxputty
 %{_prefix}/lib/isdn
 %dir /var/lock/isdn
-%{_mandir}/man1/autovbox.1*
-%{_mandir}/man1/rmdtovbox.1*
 %{_mandir}/man1/isdnbill.1*
 %{_mandir}/man1/isdnconf.1*
 %{_mandir}/man1/isdnrate.1*
 %{_mandir}/man1/isdnrep.1*
-%{_mandir}/man1/vbox.1*
-%{_mandir}/man1/vboxbeep.1*
-%{_mandir}/man1/vboxconvert.1*
-%{_mandir}/man1/vboxctrl.1*
-%{_mandir}/man1/vboxmode.1*
-%{_mandir}/man1/vboxplay.1*
-%{_mandir}/man1/vboxtoau.1*
 %{_mandir}/man4/isdn_audio.4*
 %{_mandir}/man4/isdnctrl.4*
 %{_mandir}/man4/isdninfo.4*
@@ -331,12 +318,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/isdnlog.users.5*
 %{_mandir}/man5/rate.conf.5*
 %{_mandir}/man5/rate-files.5*
-%{_mandir}/man5/vbox.conf.5*
-%{_mandir}/man5/vbox_file.5*
-%{_mandir}/man5/vboxd.conf.5*
-%{_mandir}/man5/vboxgetty.conf.5*
-%{_mandir}/man5/vboxrc.5*
-%{_mandir}/man5/vboxtcl.5*
 %{_mandir}/man7/isdn_cause.7*
 %{_mandir}/man8/.isdnctrl_conf.8*
 %{_mandir}/man8/actctrl.8*
@@ -351,6 +332,41 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/isdnlog.8*
 %{_mandir}/man8/loopctrl.8*
 %{_mandir}/man8/mkzonedb.8*
+
+%files vbox
+%defattr(644,root,root,755)
+%doc vbox/{CHANGES,README} vbox/doc/de/vbox.txt
+%attr(755,root,root) %{_bindir}/autovbox
+%attr(755,root,root) %{_bindir}/rmdtovbox
+%attr(755,root,root) %{_bindir}/vbox
+%attr(755,root,root) %{_bindir}/vboxbeep
+%attr(755,root,root) %{_bindir}/vboxcnvt
+%attr(755,root,root) %{_bindir}/vboxctrl
+%attr(755,root,root) %{_bindir}/vboxmode
+%attr(755,root,root) %{_bindir}/vboxplay
+%attr(755,root,root) %{_bindir}/vboxtoau
+%attr(755,root,root) %{_sbindir}/vboxd
+%attr(755,root,root) %{_sbindir}/vboxgetty
+%attr(755,root,root) %{_sbindir}/vboxmail
+%attr(755,root,root) %{_sbindir}/vboxputty
+%dir %{_sysconfdir}/vbox
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/vbox/vboxd.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/vbox/vboxgetty.conf
+%{_mandir}/man1/autovbox.1*
+%{_mandir}/man1/rmdtovbox.1*
+%{_mandir}/man1/vbox.1*
+%{_mandir}/man1/vboxbeep.1*
+%{_mandir}/man1/vboxconvert.1*
+%{_mandir}/man1/vboxctrl.1*
+%{_mandir}/man1/vboxmode.1*
+%{_mandir}/man1/vboxplay.1*
+%{_mandir}/man1/vboxtoau.1*
+%{_mandir}/man5/vbox.conf.5*
+%{_mandir}/man5/vbox_file.5*
+%{_mandir}/man5/vboxd.conf.5*
+%{_mandir}/man5/vboxgetty.conf.5*
+%{_mandir}/man5/vboxrc.5*
+%{_mandir}/man5/vboxtcl.5*
 %{_mandir}/man8/vboxd.8*
 %{_mandir}/man8/vboxgetty.8*
 %{_mandir}/man8/vboxmail.8*
