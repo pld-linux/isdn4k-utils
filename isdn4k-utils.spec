@@ -95,6 +95,9 @@ Pliki potrzebne do programowania z użyciem isdn4k-tools.
 Summary:	Configuration tools for CAPI hardware
 Summary(pl.UTF-8):	Programy konfiguracyjne do sprzętu CAPI
 Group:		Applications/Communications
+Requires:	capi4k-utils-libs = %{epoch}:%{version}-%{release}
+Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 Obsoletes:	capi
 Obsoletes:	capi-tools
 Obsoletes:	capi4k-utils-remotecapi
@@ -289,6 +292,16 @@ install -d isdn-doc/faq
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post -n capi4k-utils
+/sbin/chkconfig --add capi
+%service capi restart
+
+%preun -n capi4k-utils
+if [ "$1" = "0" ]; then
+	%service capi stop
+	/sbin/chkconfig --del capi
+fi
 
 %post	-n capi4k-utils-libs -p /sbin/ldconfig
 %postun	-n capi4k-utils-libs -p /sbin/ldconfig
