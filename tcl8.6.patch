@@ -1,0 +1,21 @@
+--- a/vbox/src/script.c
++++ b/vbox/src/script.c
+@@ -19,6 +19,8 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#define USE_INTERP_RESULT
++#define USE_INTERP_ERRORLINE
+ #include <tcl.h>
+ #include <unistd.h>
+ #include <string.h>
+--- a/vbox3/vboxgetty/tclscript.c
++++ b/vbox3/vboxgetty/tclscript.c
+@@ -8,6 +8,7 @@
+ #  include "../config.h"
+ #endif
+ 
++#define USE_INTERP_ERRORLINE
+ #include <tcl.h>
+ #include <string.h>
+ #include <unistd.h>

@@ -2,7 +2,7 @@ Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra
 Summary(pt_BR.UTF-8):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
-Version:	3.25
+Version:	3.27
 Release:	1
 Epoch:		3
 License:	GPL v2
@@ -10,7 +10,7 @@ Group:		Applications/Communications
 # git clone git://git.misdn.eu/isdn4k-utils.git
 # git checkout v3.25
 Source0:	%{name}-%{version}.tar.xz
-# Source0-md5:	cb297fd819a146f4c7afc6bc9706ac51
+# Source0-md5:	09d3d6fbb3e1f69776e7a9ada836e074
 Source1:	%{name}.config
 Source2:	capi.conf
 Source3:	capi.init
@@ -21,6 +21,10 @@ Patch3:		%{name}-sh.patch
 Patch4:		%{name}-opt.patch
 Patch5:		%{name}-link.patch
 Patch6:		%{name}-rcapid.patch
+Patch7:		use-va_copy.patch
+Patch8:		format-security.patch
+Patch9:		tcl8.6.patch
+Patch10:	gnu89-inline.patch
 URL:		http://www.isdn4linux.de/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -230,6 +234,10 @@ Wtyczka CAPI dla pppd w wersji %{ppp_ver}.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 # don't symlink app-defaults dir to /etc/X11
 %{__sed} -i -e 's,@xmkmf,imake -I%{_libdir}/X11/config -DUseInstalled -DUseSeparateConfDir=NO,' xisdnload/Makefile.in
@@ -251,7 +259,7 @@ for i in capifax capiinfo capiinit rcapid vbox; do
 done
 
 cp %{SOURCE1} .config
-%{__make} subconfig \
+%{__make} -j1 subconfig \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -I/usr/include/ncurses" \
 	CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses" \
@@ -259,7 +267,7 @@ cp %{SOURCE1} .config
 	OPTIM="%{rpmcflags}"
 
 # explicit CC/CCFLAGS for imontty and few other dirs
-%{__make} \
+%{__make} -j1 \
 	CC="%{__cc}" \
 	CCFLAGS="%{rpmcflags}" \
 	PPPVERSION=%{ppp_ver} \
@@ -269,7 +277,7 @@ cp %{SOURCE1} .config
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/var/lock/isdn,/sbin}
 
-%{__make} install \
+%{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	CONFIG_LIBDIR=%{_libdir} \
 	INCROOT=%{_includedir} \

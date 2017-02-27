@@ -1,0 +1,34 @@
+Author: Andreas Beckmann <anbe@debian.org>
+Description: fix FTBFS: error: assignment to expression with array type
+
+--- a/ipppd/main.c
++++ b/ipppd/main.c
+@@ -1205,7 +1205,6 @@ int vfmtmsg(char *buf,int buflen,char *f
+     unsigned long val=0;
+     char *str, *f, *buf0;
+     unsigned char *p;
+-    va_list a;
+     char num[32];
+     time_t t;
+     static char hexchars[] = "0123456789abcdef";
+@@ -1296,15 +1295,19 @@ int vfmtmsg(char *buf,int buflen,char *f
+         str = ip_ntoa(va_arg(args, u_int32_t));
+         break;
+     case 'r':
++	{
++    	va_list a;
+         f = va_arg(args, char *);
+-        a = va_arg(args, va_list);
++	va_copy(a, args);
+ #ifdef __alpha__       /* always do this? */
+ 	n = fmtmsg(buf, buflen + 1, f, a);
+ #else
+ 	n = vfmtmsg(buf, buflen + 1, f, a);
+ #endif
++	va_end(a);
+         buf += n;
+         buflen -= n;
++	}
+         continue;
+     case 't':
+         time(&t);

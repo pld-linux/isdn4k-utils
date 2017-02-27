@@ -1,0 +1,17 @@
+Description: fix build failure with GCC5:
+ build isdnlog with -fgnu89-inline
+Origin: vendor
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=777920
+Author: gregor herrmann <gregoa@debian.org>
+Last-Update: 2015-07-20
+
+--- a/isdnlog/Makefile.in
++++ b/isdnlog/Makefile.in
+@@ -1720,6 +1720,7 @@ endif
+ # export CFLAGS  = -Wall -pipe -O6 -fomit-frame-pointer -fforce-mem -fforce-addr -funroll-loops -fstrength-reduce
+ 
+ export CFLAGS  = @CFLAGS@ -Wall -pipe
++CFLAGS	+= -fgnu89-inline
+ CC          = @CC@
+ 
+ INCLUDE     = -I./isdnlog -I./connect -I./tools -I$(PREFIXDIR) -I$(LIBISDNDIR)
