@@ -19,7 +19,7 @@
 +MKDIR=$(TOPDIR)/mkinstalldirs
 +PPPINC=/usr/include/pppd
 +MANDIR=/usr/share/man
-+PLUGINDIR=$(DESTDIR)$(CONFIG_LIBDIR)/pppd/$(PPPVERSION)
++PLUGINDIR=$(DESTDIR)$(CONFIG_LIBDIR)/pppd/plugins
  
  ifeq ($(PPPVERSION),)
  PPPVERSION_XX=$(shell grep VERSION $(PPPINC)/patchlevel.h)

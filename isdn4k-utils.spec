@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra
 Summary(pt_BR.UTF-8):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	3.27
-Release:	1
+Release:	2
 Epoch:		3
 License:	GPL v2
 Group:		Applications/Communications
@@ -87,7 +87,7 @@ Summary:	Developement files for isdn4k-tools
 Summary(pl.UTF-8):	Pliki potrzebne do programowania z użyciem isdn4k-tools
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	xorg-data-bitmaps
+Requires:	xorg-data-xbitmaps
 
 %description devel
 Developement files for isdn4k-tools.
@@ -286,6 +286,7 @@ install -d $RPM_BUILD_ROOT{/var/lock/isdn,/sbin}
 
 install -D %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/capi.conf
 install -D %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/capi
+
 # Firmware goes here - see LSB and kernel 2.6.x ISDN stuff
 install -d $RPM_BUILD_ROOT%{_datadir}/isdn
 
@@ -293,6 +294,7 @@ test ! -d isdn-doc || %{__rm} -r isdn-doc
 install -d isdn-doc/faq
 %{__mv} $RPM_BUILD_ROOT%{_docdir}/isdn4linux/faq/*.{txt,html} isdn-doc/faq
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/isdn4linux/faq/*.sgml
+
 # vbox.txt packaged as %doc
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/vbox
 
@@ -473,6 +475,6 @@ fi
 %files -n ppp-plugin-capi
 %defattr(644,root,root,755)
 %doc pppdcapiplugin/{README,examples/*,peers/*}
-%attr(755,root,root) %{_libdir}/pppd/%{ppp_ver}/capiplugin.so
-%attr(755,root,root) %{_libdir}/pppd/%{ppp_ver}/userpass.so
+%attr(755,root,root) %{_libdir}/pppd/plugins/capiplugin.so
+%attr(755,root,root) %{_libdir}/pppd/plugins/userpass.so
 %{_mandir}/man8/capiplugin.8*
