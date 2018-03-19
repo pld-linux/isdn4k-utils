@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra
 Summary(pt_BR.UTF-8):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	3.27
-Release:	2
+Release:	3
 Epoch:		3
 License:	GPL v2
 Group:		Applications/Communications
@@ -25,6 +25,7 @@ Patch7:		use-va_copy.patch
 Patch8:		format-security.patch
 Patch9:		tcl8.6.patch
 Patch10:	gnu89-inline.patch
+Patch11:	perl-wld-module.patch
 URL:		http://www.isdn4linux.de/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -238,6 +239,7 @@ Wtyczka CAPI dla pppd w wersji %{ppp_ver}.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # don't symlink app-defaults dir to /etc/X11
 %{__sed} -i -e 's,@xmkmf,imake -I%{_libdir}/X11/config -DUseInstalled -DUseSeparateConfDir=NO,' xisdnload/Makefile.in
