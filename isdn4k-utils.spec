@@ -1,3 +1,7 @@
+#
+# NOTE: Upstream is dead and ISDN support has been removed
+#       statring with kernel 5.3, so this package can't build
+#
 Summary:	Utilities for the kernel ISDN-subsystem
 Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra
 Summary(pt_BR.UTF-8):	Utilitários para configuração do subsistema ISDN
