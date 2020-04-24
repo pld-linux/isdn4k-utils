@@ -7,7 +7,7 @@ Summary(pl.UTF-8):	Narzędzia dla podsystemu ISDN jądra
 Summary(pt_BR.UTF-8):	Utilitários para configuração do subsistema ISDN
 Name:		isdn4k-utils
 Version:	3.27
-Release:	5
+Release:	6
 Epoch:		3
 License:	GPL v2
 Group:		Applications/Communications
